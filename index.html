@@ -8,27 +8,23 @@
 
 <title>Starting Day for DC5</title>
 
+
 <style>
 
 *{
 box-sizing:border-box;
-font-family:Segoe UI,Arial,sans-serif;
-}
-
-
-html,body{
-
-margin:0;
-width:100%;
-height:100%;
-overflow:hidden;
-
+font-family:'Inter','Segoe UI',Arial,sans-serif;
 }
 
 
 body{
 
-background:linear-gradient(135deg,#08202b,#17617c);
+margin:0;
+height:100vh;
+overflow:hidden;
+
+background:
+linear-gradient(135deg,#071e2b,#0f6b7c);
 
 display:flex;
 align-items:center;
@@ -46,16 +42,16 @@ width:100%;
 max-width:950px;
 height:92vh;
 
-background:white;
+background:#ffffffee;
 
-border-radius:28px;
+border-radius:30px;
 
 padding:25px;
 
-box-shadow:0 25px 60px #0006;
+box-shadow:
+0 30px 70px #0005;
 
-display:flex;
-flex-direction:column;
+backdrop-filter:blur(10px);
 
 }
 
@@ -66,18 +62,63 @@ flex-direction:column;
 
 text-align:center;
 
-font-size:clamp(24px,5vw,40px);
+font-size:clamp(26px,5vw,42px);
 
-color:#123746;
+font-weight:800;
 
-margin-bottom:20px;
+color:#0b3445;
+
+}
+
+
+
+input{
+
+width:90%;
+max-width:500px;
+
+padding:18px;
+
+font-size:20px;
+
+border-radius:18px;
+
+border:2px solid #dbe5ea;
+
+outline:none;
 
 }
 
 
 
 
-/* LOGIN */
+button{
+
+background:#0b3445;
+
+color:white;
+
+border:none;
+
+border-radius:14px;
+
+padding:13px 22px;
+
+cursor:pointer;
+
+font-weight:600;
+
+}
+
+
+
+button:hover{
+
+transform:scale(1.04);
+
+}
+
+
 
 .login{
 
@@ -91,65 +132,12 @@ justify-content:center;
 
 align-items:center;
 
-gap:20px;
-
-}
-
-
-.login p{
-
-font-size:20px;
-color:#555;
-
-}
-
-
-.login input{
-
-width:90%;
-max-width:500px;
-
-padding:20px;
-
-font-size:20px;
-
-border-radius:16px;
-
-border:2px solid #ddd;
+gap:25px;
 
 }
 
 
 
-button{
-
-background:#123746;
-
-color:white;
-
-border:0;
-
-border-radius:14px;
-
-padding:16px 30px;
-
-font-size:18px;
-
-cursor:pointer;
-
-}
-
-
-
-button:hover{
-
-opacity:.85;
-
-}
-
-
-
-/* CALENDAR */
 
 
 #calendarApp{
@@ -167,13 +155,13 @@ flex-direction:column;
 
 .header{
 
-display:flex;
+height:55px;
 
-justify-content:space-between;
+display:flex;
 
 align-items:center;
 
-height:55px;
+justify-content:space-between;
 
 }
 
@@ -189,13 +177,15 @@ grid-template-columns:repeat(7,1fr);
 
 grid-template-rows:repeat(6,1fr);
 
-border:2px solid #ddd;
+border:2px solid #dce5ea;
 
-border-radius:18px;
+border-radius:20px;
 
 overflow:hidden;
 
 }
+
+
 
 
 
@@ -203,22 +193,49 @@ overflow:hidden;
 
 position:relative;
 
-border-right:1px solid #ddd;
+background:#fbfdff;
 
-border-bottom:1px solid #ddd;
+border-right:1px solid #dce5ea;
 
-padding:6px;
+border-bottom:1px solid #dce5ea;
 
-overflow:hidden;
+padding:8px;
 
-background:#fafcff;
+transition:.2s;
 
 }
 
 
-.box:nth-child(7n){
 
-border-right:none;
+.box:hover:not(.disabled){
+
+background:#eaf8ff;
+
+cursor:pointer;
+
+}
+
+
+
+.box:hover:not(.disabled)::after{
+
+content:"＋ Add";
+
+position:absolute;
+
+right:8px;
+
+bottom:8px;
+
+background:#0b3445;
+
+color:white;
+
+font-size:11px;
+
+padding:4px 8px;
+
+border-radius:10px;
 
 }
 
@@ -226,15 +243,18 @@ border-right:none;
 
 .number{
 
-font-weight:bold;
+font-weight:800;
+
+color:#0b3445;
 
 }
 
 
 
+
 .disabled{
 
-background:#eee;
+background:#eeeeee;
 
 color:#999;
 
@@ -244,17 +264,19 @@ pointer-events:none;
 
 
 
+
+
 .people{
 
 position:absolute;
 
-top:25px;
-
-bottom:5px;
+top:30px;
 
 left:5px;
 
 right:5px;
+
+bottom:5px;
 
 overflow:auto;
 
@@ -263,19 +285,20 @@ overflow:auto;
 
 
 
+
 .person{
 
-background:#123746;
+background:#0b3445;
 
 color:white;
 
-border-radius:8px;
-
-font-size:12px;
+border-radius:10px;
 
 padding:5px;
 
-margin-bottom:4px;
+margin-bottom:5px;
+
+font-size:12px;
 
 display:flex;
 
@@ -290,11 +313,21 @@ align-items:center;
 
 .delete{
 
-background:#e74c3c;
+background:#ff4d5d;
 
-padding:3px 7px;
+padding:3px 8px;
 
-font-size:10px;
+font-size:11px;
+
+border-radius:8px;
+
+}
+
+
+
+.delete:hover{
+
+background:#c90018;
 
 }
 
@@ -302,15 +335,15 @@ font-size:10px;
 
 .admin{
 
-background:#ffe3e3;
+background:#ffe5e8;
 
-padding:10px;
+padding:12px;
 
-border-radius:12px;
-
-margin-bottom:10px;
+border-radius:15px;
 
 }
+
+
 
 
 
@@ -321,21 +354,7 @@ margin-bottom:10px;
 
 height:95vh;
 
-padding:15px;
-
-}
-
-
-.login input{
-
-font-size:17px;
-
-}
-
-
-.box{
-
-padding:3px;
+padding:12px;
 
 }
 
@@ -347,14 +366,22 @@ font-size:9px;
 }
 
 
-.title{
+.box{
 
-font-size:25px;
+padding:4px;
+
+}
+
+
+.number{
+
+font-size:12px;
 
 }
 
 
 }
+
 
 </style>
 
@@ -362,11 +389,11 @@ font-size:25px;
 </head>
 
 
+
 <body>
 
 
 <div class="card">
-
 
 
 <div class="title">
@@ -376,26 +403,21 @@ Starting Day for DC5 🚀
 
 
 
-<div id="loginScreen" class="login">
+<div id="login" class="login">
 
 
-<p>
-Enter your name to continue
-</p>
-
-
-<input 
-id="nameInput"
-placeholder="Your name">
+<input id="nameInput"
+placeholder="Enter your name">
 
 
 <button id="enterButton">
+
 Enter Calendar
+
 </button>
 
 
 </div>
-
 
 
 
@@ -437,11 +459,7 @@ Enter Calendar
 
 
 
-
-
 </div>
-
-
 
 
 
@@ -453,6 +471,7 @@ Enter Calendar
 import {initializeApp}
 
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
 
 
 import {
@@ -472,9 +491,7 @@ from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 
 
-
 const firebaseConfig={
-
 
 apiKey:"AIzaSyAR8EByZhPKm8Miqwwh_1wM2oruBoncCkU",
 
@@ -492,10 +509,10 @@ appId:"1:102677604313:web:d56a37c93bf49f4c8b5bc8"
 
 
 
-
 const app=initializeApp(firebaseConfig);
 
 const db=getFirestore(app);
+
 
 
 
@@ -516,10 +533,9 @@ document
 .onclick=()=>{
 
 
-username=document
-.getElementById("nameInput")
-.value
-.trim();
+username=
+document.getElementById("nameInput")
+.value.trim();
 
 
 
@@ -537,43 +553,36 @@ admin=username.toLowerCase()=="admin";
 
 
 
-document.getElementById("loginScreen")
-.style.display="none";
+login.style.display="none";
 
-
-document.getElementById("calendarApp")
-.style.display="flex";
-
+calendarApp.style.display="flex";
 
 
 
 if(admin){
 
-
-document.getElementById("adminPanel")
-.innerHTML=
+adminPanel.innerHTML=
 
 `
+
 <div class="admin">
 
-<b>Admin Mode</b><br><br>
+<b>ADMIN MODE</b><br><br>
 
-<button id="clearBtn">
+<button id="clear">
 Clear All
 </button>
 
 </div>
+
 `;
 
 
-
 document
-.getElementById("clearBtn")
+.getElementById("clear")
 .onclick=clearAll;
 
-
 }
-
 
 
 draw();
@@ -590,22 +599,17 @@ draw();
 function draw(){
 
 
-let calendar=
-document.getElementById("calendar");
-
-
 calendar.innerHTML="";
 
 
+monthTitle.innerText=current.toLocaleString(
 
-document
-.getElementById("monthTitle")
-.innerText=current.toLocaleString(
 "default",
 {
 month:"long",
 year:"numeric"
 }
+
 );
 
 
@@ -617,7 +621,6 @@ today.setHours(0,0,0,0);
 
 
 
-
 let first=new Date(
 current.getFullYear(),
 current.getMonth(),
@@ -626,25 +629,29 @@ current.getMonth(),
 
 
 
-for(let i=0;i<first;i++){
 
+
+for(let i=0;i<first;i++)
 calendar.innerHTML+="<div></div>";
 
-}
 
 
 
-let total=new Date(
+
+let days=new Date(
+
 current.getFullYear(),
 current.getMonth()+1,
 0
+
 ).getDate();
 
 
 
 
 
-for(let d=1;d<=total;d++){
+
+for(let d=1;d<=days;d++){
 
 
 
@@ -666,6 +673,15 @@ date.setHours(0,0,0,0);
 
 
 
+box.innerHTML=
+
+`
+<div class="number">${d}</div>
+<div class="people"></div>
+`;
+
+
+
 if(date<today){
 
 box.classList.add("disabled");
@@ -674,20 +690,21 @@ box.classList.add("disabled");
 
 
 
-box.innerHTML=
 
-`
+box.onclick=()=>{
 
-<div class="number">${d}</div>
+if(!box.classList.contains("disabled"))
+addBooking(d);
 
-<div class="people"></div>
-
-`;
+};
 
 
 
-let people=box.querySelector(".people");
 
+
+
+let people=
+box.querySelector(".people");
 
 
 
@@ -701,9 +718,7 @@ let saved=new Date(b.date);
 if(
 
 saved.getDate()==d &&
-
 saved.getMonth()==current.getMonth() &&
-
 saved.getFullYear()==current.getFullYear()
 
 ){
@@ -715,7 +730,13 @@ let p=document.createElement("div");
 p.className="person";
 
 
-p.innerHTML=b.name;
+p.innerHTML=
+
+`
+
+<span>${b.name}</span>
+
+`;
 
 
 
@@ -724,12 +745,21 @@ if(admin || b.name==username){
 
 let x=document.createElement("button");
 
+
 x.className="delete";
 
 x.innerText="X";
 
 
-x.onclick=()=>removeBooking(b);
+
+x.onclick=(e)=>{
+
+e.stopPropagation();
+
+removeBooking(b);
+
+};
+
 
 
 p.appendChild(x);
@@ -751,30 +781,51 @@ people.appendChild(p);
 
 
 
-
-if(date>=today){
-
-box.onclick=()=>addBooking(d);
-
-}
-
-
-
 calendar.appendChild(box);
 
 
-}
-
-
 
 }
 
 
 
+}
 
-document
-.getElementById("nextBtn")
-.onclick=()=>{
+
+
+
+
+
+prevBtn.onclick=()=>{
+
+
+let now=new Date();
+
+
+if(
+
+current.getMonth()==now.getMonth()
+&&
+current.getFullYear()==now.getFullYear()
+
+)return;
+
+
+
+current.setMonth(current.getMonth()-1);
+
+
+draw();
+
+
+};
+
+
+
+
+
+
+nextBtn.onclick=()=>{
 
 current.setMonth(current.getMonth()+1);
 
@@ -784,25 +835,6 @@ draw();
 
 
 
-document
-.getElementById("prevBtn")
-.onclick=()=>{
-
-let now=new Date();
-
-if(
-current.getMonth()==now.getMonth()
-&&
-current.getFullYear()==now.getFullYear()
-)return;
-
-
-current.setMonth(current.getMonth()-1);
-
-draw();
-
-};
-
 
 
 
@@ -811,20 +843,27 @@ async function addBooking(day){
 
 
 await addDoc(
+
 collection(db,"startingDays"),
+
 {
 
 name:username,
 
 date:new Date(
+
 current.getFullYear(),
 current.getMonth(),
 day
+
 ).toISOString()
 
 });
 
+
 }
+
+
 
 
 
@@ -833,10 +872,7 @@ day
 async function removeBooking(b){
 
 
-if(
-!admin &&
-b.name!=username
-){
+if(!admin && b.name!=username){
 
 return;
 
@@ -844,11 +880,14 @@ return;
 
 
 await deleteDoc(
+
 doc(db,"startingDays",b.id)
+
 );
 
 
 }
+
 
 
 
@@ -872,6 +911,7 @@ doc(db,"startingDays",d.id)
 
 
 }
+
 
 
 
@@ -903,7 +943,6 @@ id:d.id,
 
 draw();
 
-
 });
 
 
@@ -911,5 +950,4 @@ draw();
 
 
 </body>
-
 </html>
