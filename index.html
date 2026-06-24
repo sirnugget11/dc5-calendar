@@ -1,127 +1,183 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Starting Day for DC5</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
+*{
+box-sizing:border-box;
+font-family:Segoe UI,Arial,sans-serif;
+}
+
+
 body{
+
 margin:0;
-font-family:Segoe UI,Arial;
-background:linear-gradient(135deg,#0f2027,#2c5364);
 min-height:100vh;
+background:linear-gradient(135deg,#0f2027,#2c5364);
 display:flex;
 justify-content:center;
 align-items:center;
+
 }
 
 
 .card{
+
 background:white;
 width:95%;
-max-width:900px;
-padding:25px;
+max-width:1000px;
+padding:30px;
 border-radius:25px;
 box-shadow:0 20px 50px #0005;
+
 }
 
 
 h1{
+
 text-align:center;
+color:#203a43;
+
 }
 
 
 input{
-padding:12px;
+
 width:100%;
-border-radius:10px;
+padding:14px;
+border-radius:12px;
 border:1px solid #ccc;
+font-size:16px;
+
 }
 
 
 button{
-padding:10px 15px;
-border:0;
-border-radius:10px;
-cursor:pointer;
+
 background:#203a43;
 color:white;
+border:none;
+padding:10px 15px;
+border-radius:10px;
+cursor:pointer;
+
 }
 
 
-.top{
-display:flex;
-gap:10px;
+button:hover{
+
+opacity:.85;
+
 }
+
 
 
 .header{
+
 display:flex;
 justify-content:space-between;
 align-items:center;
+
+margin:20px 0;
+
 }
+
 
 
 .calendar{
 
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:8px;
+border:2px solid #ddd;
 
 }
+
 
 
 .box{
 
-min-height:100px;
-border:1px solid #ddd;
-border-radius:15px;
+min-height:120px;
+border-right:1px solid #ddd;
+border-bottom:1px solid #ddd;
 padding:8px;
-background:#f8faff;
+background:#fafafa;
 
 }
+
 
 
 .box:hover{
-background:#eef3ff;
+
+background:#eef5ff;
+
 }
+
+
+
+.disabled{
+
+background:#e8e8e8;
+color:#999;
+pointer-events:none;
+
+}
+
 
 
 .number{
+
 font-weight:bold;
+font-size:18px;
+
 }
+
 
 
 .person{
 
+margin-top:8px;
 background:#203a43;
 color:white;
+padding:5px;
 border-radius:8px;
-padding:4px;
-margin-top:5px;
-font-size:12px;
+
 display:flex;
 justify-content:space-between;
+align-items:center;
+
+font-size:13px;
+
 }
+
 
 
 .delete{
-background:#d9534f;
-padding:3px 6px;
+
+background:#e74c3c;
+padding:3px 7px;
 font-size:11px;
+
 }
+
 
 
 .admin{
-background:#ffdddd;
-padding:10px;
+
+background:#ffe2e2;
+padding:15px;
 border-radius:12px;
-margin:15px 0;
+margin-bottom:15px;
+
 }
+
 
 </style>
 
@@ -135,25 +191,39 @@ margin:15px 0;
 <div class="card">
 
 
+<div id="login">
+
+
 <h1>Starting Day for DC5 🚀</h1>
 
 
-<div id="login">
+<p>Enter your name</p>
+
 
 <input id="name" placeholder="Your name">
 
 
 <br><br>
 
+
 <button onclick="start()">
 Enter Calendar
 </button>
+
 
 </div>
 
 
 
+
+
 <div id="app" style="display:none">
+
+
+<h1>Starting Day for DC5 🚀</h1>
+
+
+<div id="adminPanel"></div>
 
 
 
@@ -177,9 +247,6 @@ Enter Calendar
 
 
 
-<div id="adminPanel"></div>
-
-
 
 <div class="calendar" id="calendar"></div>
 
@@ -192,12 +259,16 @@ Enter Calendar
 
 
 
+
+
+
 <script type="module">
 
 
 import {initializeApp}
 
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
 
 
 import {
@@ -217,7 +288,9 @@ from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 
 
+
 const firebaseConfig={
+
 
 apiKey:"AIzaSyAR8EByZhPKm8Miqwwh_1wM2oruBoncCkU",
 
@@ -231,12 +304,19 @@ messagingSenderId:"102677604313",
 
 appId:"1:102677604313:web:d56a37c93bf49f4c8b5bc8"
 
+
 };
+
+
+
 
 
 const app=initializeApp(firebaseConfig);
 
+
 const db=getFirestore(app);
+
+
 
 
 
@@ -251,16 +331,28 @@ let bookings=[];
 
 
 
+
+
 window.start=function(){
+
 
 
 username=document.getElementById("name").value.trim();
 
 
-if(!username)return alert("Enter name");
+
+if(!username){
+
+alert("Enter your name");
+
+return;
+
+}
+
 
 
 admin=username.toLowerCase()=="admin";
+
 
 
 document.getElementById("login").style.display="none";
@@ -269,30 +361,36 @@ document.getElementById("app").style.display="block";
 
 
 
-draw();
-
-
 if(admin){
+
 
 document.getElementById("adminPanel").innerHTML=
 
 `
+
 <div class="admin">
 
 <b>ADMIN MODE</b><br><br>
 
 <button onclick="clearAll()">
-Clear Everything
+Clear Entire List
 </button>
 
 </div>
+
 `;
 
 }
 
 
 
+draw();
+
+
 }
+
+
+
 
 
 
@@ -301,9 +399,20 @@ Clear Everything
 function draw(){
 
 
-let cal=document.getElementById("calendar");
 
-cal.innerHTML="";
+let calendar=document.getElementById("calendar");
+
+
+calendar.innerHTML="";
+
+
+
+let today=new Date();
+
+
+today.setHours(0,0,0,0);
+
+
 
 
 
@@ -314,11 +423,45 @@ current.toLocaleString(
 {
 month:"long",
 year:"numeric"
-});
+}
+);
+
+
+
+
+
+let back =
+document.querySelector(".header button:first-child");
+
+
+
+if(
+
+current.getFullYear()==today.getFullYear()
+
+&&
+
+current.getMonth()==today.getMonth()
+
+){
+
+back.disabled=true;
+
+}
+
+else{
+
+back.disabled=false;
+
+}
+
+
+
 
 
 
 let first=
+
 new Date(
 current.getFullYear(),
 current.getMonth(),
@@ -327,12 +470,19 @@ current.getMonth(),
 
 
 
-for(let i=0;i<first;i++)
-cal.innerHTML+="<div></div>";
+
+for(let i=0;i<first;i++){
+
+calendar.innerHTML+="<div></div>";
+
+}
+
+
 
 
 
 let total=
+
 new Date(
 current.getFullYear(),
 current.getMonth()+1,
@@ -341,77 +491,158 @@ current.getMonth()+1,
 
 
 
+
+
+
 for(let d=1;d<=total;d++){
 
 
-let div=document.createElement("div");
 
-div.className="box";
+let box=document.createElement("div");
 
 
-div.innerHTML=
+box.className="box";
+
+
+
+let date=new Date(
+
+current.getFullYear(),
+current.getMonth(),
+d
+
+);
+
+
+
+date.setHours(0,0,0,0);
+
+
+
+
+
+if(date < today){
+
+box.classList.add("disabled");
+
+}
+
+
+
+box.innerHTML=
 
 `
+
 <div class="number">${d}</div>
+
 `;
+
+
+
+
 
 
 
 bookings.forEach(b=>{
 
 
-let date=new Date(b.date);
+
+let saved=new Date(b.date);
+
 
 
 if(
 
-date.getDate()==d &&
-date.getMonth()==current.getMonth() &&
-date.getFullYear()==current.getFullYear()
+saved.getDate()==d &&
+
+saved.getMonth()==current.getMonth() &&
+
+saved.getFullYear()==current.getFullYear()
 
 ){
 
 
-let p=document.createElement("div");
 
-p.className="person";
+let person=document.createElement("div");
 
 
-p.innerHTML=
+person.className="person";
+
+
+
+person.innerHTML=
 
 `
 
-${b.name}
-
-<button class="delete">
-X
-</button>
+<span>${b.name}</span>
 
 `;
 
 
 
-p.querySelector("button")
-.onclick=()=>removeBooking(b);
+
+if(
+
+b.name==username ||
+
+admin
+
+){
+
+
+let x=document.createElement("button");
+
+
+x.className="delete";
+
+x.innerText="X";
 
 
 
-div.appendChild(p);
+x.onclick=(e)=>{
+
+e.stopPropagation();
+
+removeBooking(b);
+
+};
+
+
+
+person.appendChild(x);
+
+
+}
+
+
+
+box.appendChild(person);
 
 
 
 }
+
+
 
 
 });
 
 
 
-div.onclick=()=>addBooking(d);
+
+
+if(date >= today){
+
+
+box.onclick=()=>addBooking(d);
+
+
+}
 
 
 
-cal.appendChild(div);
+calendar.appendChild(box);
+
 
 
 }
@@ -419,36 +650,112 @@ cal.appendChild(div);
 
 
 }
+
+
+
+
+
+
+
+window.monthMove=function(amount){
+
+
+
+let next=new Date(current);
+
+
+
+next.setMonth(
+next.getMonth()+amount
+);
+
+
+
+let today=new Date();
+
+
+
+if(
+
+next.getFullYear()<today.getFullYear()
+
+||
+
+(
+
+next.getFullYear()==today.getFullYear()
+
+&&
+
+next.getMonth()<today.getMonth()
+
+)
+
+){
+
+return;
+
+}
+
+
+
+
+current=next;
+
+
+draw();
+
+
+
+}
+
+
+
+
+
 
 
 
 async function addBooking(day){
 
 
+
 let chosen=new Date(
 
 current.getFullYear(),
+
 current.getMonth(),
+
 day
 
 );
 
 
 
+
+
 await addDoc(
+
 collection(db,"startingDays"),
+
 {
 
 name:username,
 
-date:chosen.toISOString()
+date:chosen.toISOString(),
+
+created:Date.now()
 
 }
 
 );
 
 
+
 }
+
+
+
 
 
 
@@ -456,9 +763,11 @@ date:chosen.toISOString()
 async function removeBooking(b){
 
 
+
 if(
-b.name!=username &&
-!admin
+
+b.name!=username && !admin
+
 ){
 
 alert("You can only delete your own booking");
@@ -468,26 +777,19 @@ return;
 }
 
 
+
 await deleteDoc(
+
 doc(db,"startingDays",b.id)
+
 );
+
 
 
 }
 
 
 
-
-
-window.monthMove=function(x){
-
-current.setMonth(
-current.getMonth()+x
-);
-
-draw();
-
-}
 
 
 
@@ -496,28 +798,44 @@ draw();
 window.clearAll=async function(){
 
 
+
 if(!admin)return;
+
 
 
 if(!confirm("Delete everything?"))
 return;
 
 
+
+
 let snap=await getDocs(
+
 collection(db,"startingDays")
+
 );
+
+
 
 
 snap.forEach(async d=>{
 
+
 await deleteDoc(
+
 doc(db,"startingDays",d.id)
+
 );
+
 
 });
 
 
 }
+
+
+
+
 
 
 
@@ -527,30 +845,38 @@ onSnapshot(
 
 collection(db,"startingDays"),
 
-snap=>{
+snapshot=>{
 
 
 bookings=[];
 
 
-snap.forEach(d=>{
+
+snapshot.forEach(d=>{
+
 
 bookings.push({
 
 id:d.id,
+
 ...d.data()
 
 });
 
+
 });
+
 
 
 draw();
 
 
+
 }
 
 );
+
+
 
 
 
