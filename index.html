@@ -13,23 +13,29 @@
 
 *{
 box-sizing:border-box;
-font-family:Inter,Segoe UI,Arial,sans-serif;
+font-family:Segoe UI,Arial,sans-serif;
+}
+
+
+html,body{
+
+margin:0;
+width:100%;
+height:100%;
+overflow:hidden;
+
 }
 
 
 body{
 
-margin:0;
-min-height:100vh;
-
-background:
-linear-gradient(135deg,#081f2c,#14506b);
+background:linear-gradient(135deg,#08202b,#17617c);
 
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 
-padding:15px;
+padding:10px;
 
 }
 
@@ -38,20 +44,21 @@ padding:15px;
 .card{
 
 width:100%;
-max-width:900px;
+height:100%;
 
-height:min(90vh,850px);
+max-width:1000px;
+max-height:900px;
 
 background:white;
 
-border-radius:28px;
+border-radius:24px;
 
-padding:25px;
+padding:20px;
 
-box-shadow:
-0 25px 60px rgba(0,0,0,.35);
+display:flex;
+flex-direction:column;
 
-overflow:hidden;
+box-shadow:0 20px 50px #0006;
 
 }
 
@@ -60,11 +67,12 @@ overflow:hidden;
 h1{
 
 text-align:center;
-margin:0 0 20px;
+
+margin:5px;
 
 color:#123746;
 
-font-size:clamp(22px,5vw,34px);
+font-size:clamp(20px,4vw,32px);
 
 }
 
@@ -73,12 +81,11 @@ font-size:clamp(22px,5vw,34px);
 input{
 
 width:100%;
-
 padding:14px;
 
-border-radius:14px;
+border-radius:12px;
 
-border:2px solid #ddd;
+border:1px solid #ccc;
 
 font-size:16px;
 
@@ -88,15 +95,15 @@ font-size:16px;
 
 button{
 
-border:0;
-
 background:#123746;
 
 color:white;
 
-border-radius:12px;
+border:0;
 
-padding:12px 18px;
+border-radius:10px;
+
+padding:10px 14px;
 
 cursor:pointer;
 
@@ -104,18 +111,7 @@ cursor:pointer;
 
 
 
-button:hover{
-
-opacity:.85;
-
-}
-
-
-
-
 .header{
-
-height:55px;
 
 display:flex;
 
@@ -123,13 +119,9 @@ justify-content:space-between;
 
 align-items:center;
 
-}
+height:45px;
 
-
-
-#title{
-
-font-size:clamp(18px,4vw,25px);
+flex-shrink:0;
 
 }
 
@@ -137,7 +129,7 @@ font-size:clamp(18px,4vw,25px);
 
 .calendar{
 
-height:calc(100% - 140px);
+flex:1;
 
 display:grid;
 
@@ -145,14 +137,15 @@ grid-template-columns:repeat(7,1fr);
 
 grid-template-rows:repeat(6,1fr);
 
-border:2px solid #ddd;
+border:1px solid #ccc;
 
-border-radius:18px;
+border-radius:14px;
 
 overflow:hidden;
 
-}
+min-height:0;
 
+}
 
 
 
@@ -164,9 +157,9 @@ border-right:1px solid #ddd;
 
 border-bottom:1px solid #ddd;
 
-padding:8px;
+padding:5px;
 
-background:#fbfdff;
+background:#fafcff;
 
 overflow:hidden;
 
@@ -174,12 +167,11 @@ overflow:hidden;
 
 
 
-.box:hover{
+.box:nth-child(7n){
 
-background:#f0f7ff;
+border-right:none;
 
 }
-
 
 
 
@@ -187,9 +179,7 @@ background:#f0f7ff;
 
 font-weight:bold;
 
-color:#123746;
-
-font-size:16px;
+font-size:14px;
 
 }
 
@@ -197,7 +187,7 @@ font-size:16px;
 
 .disabled{
 
-background:#eee;
+background:#ededed;
 
 color:#999;
 
@@ -207,22 +197,21 @@ pointer-events:none;
 
 
 
-
-
 .people{
 
 position:absolute;
 
-left:6px;
-right:6px;
+top:24px;
 
-top:30px;
-bottom:6px;
+left:4px;
 
-overflow-y:auto;
+right:4px;
+
+bottom:4px;
+
+overflow:auto;
 
 }
-
 
 
 
@@ -232,21 +221,19 @@ background:#123746;
 
 color:white;
 
-border-radius:10px;
+border-radius:7px;
 
-padding:5px;
+padding:3px 5px;
 
-margin-bottom:5px;
+margin-bottom:3px;
 
-font-size:12px;
+font-size:11px;
 
 display:flex;
 
-align-items:center;
-
 justify-content:space-between;
 
-gap:5px;
+align-items:center;
 
 }
 
@@ -254,27 +241,23 @@ gap:5px;
 
 .delete{
 
+padding:2px 5px;
+
+font-size:10px;
+
 background:#e74c3c;
-
-padding:3px 7px;
-
-font-size:11px;
 
 }
 
 
 
-
-
 .admin{
 
-background:#ffe7e7;
+background:#ffe5e5;
 
-padding:12px;
+padding:8px;
 
-border-radius:14px;
-
-margin-bottom:10px;
+border-radius:10px;
 
 }
 
@@ -285,49 +268,47 @@ margin-bottom:10px;
 
 .card{
 
-height:95vh;
+padding:10px;
 
-padding:15px;
-
-border-radius:20px;
+border-radius:15px;
 
 }
 
 
-.calendar{
 
-height:calc(100% - 120px);
+h1{
+
+font-size:20px;
 
 }
 
 
 .box{
 
-padding:5px;
+padding:3px;
 
 }
 
 
 .number{
 
-font-size:13px;
+font-size:11px;
 
 }
 
 
 .person{
 
-font-size:10px;
+font-size:9px;
 
-padding:3px;
+padding:2px;
 
 }
 
 
-
 button{
 
-padding:10px;
+padding:8px;
 
 }
 
@@ -340,8 +321,6 @@ padding:10px;
 </style>
 
 </head>
-
-
 
 
 <body>
@@ -359,19 +338,14 @@ Starting Day for DC5 🚀
 </h1>
 
 
-<input 
-id="name"
-placeholder="Enter your name">
-
+<input id="name" placeholder="Your name">
 
 
 <br><br>
 
 
 <button onclick="start()">
-
-Enter Calendar
-
+Enter
 </button>
 
 
@@ -380,9 +354,7 @@ Enter Calendar
 
 
 
-
-
-<div id="app" style="display:none">
+<div id="app" style="display:none; height:100%; flex-direction:column;">
 
 
 <h1>
@@ -392,7 +364,6 @@ Starting Day for DC5 🚀
 
 
 <div id="adminPanel"></div>
-
 
 
 
@@ -439,8 +410,6 @@ import {initializeApp}
 
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 
-
-
 import {
 
 getFirestore,
@@ -454,7 +423,6 @@ getDocs
 }
 
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-
 
 
 
@@ -478,11 +446,10 @@ appId:"1:102677604313:web:d56a37c93bf49f4c8b5bc8"
 
 
 
-
 const app=initializeApp(firebaseConfig);
 
-
 const db=getFirestore(app);
+
 
 
 
@@ -499,35 +466,22 @@ let bookings=[];
 
 
 
-
 window.start=function(){
 
 
-username=document
-.getElementById("name")
-.value
-.trim();
+username=name.value.trim();
 
 
 
-if(!username){
-
-alert("Enter name");
-
-return;
-
-}
-
+if(!username)return;
 
 
 admin=username.toLowerCase()=="admin";
 
 
+login.style.display="none";
 
-document.getElementById("login").style.display="none";
-
-document.getElementById("app").style.display="block";
-
+app.style.display="flex";
 
 
 
@@ -540,12 +494,12 @@ adminPanel.innerHTML=
 
 <div class="admin">
 
-<b>Admin Mode</b><br><br>
+Admin Mode
+
+<br><br>
 
 <button onclick="clearAll()">
-
-Clear Everything
-
+Clear All
 </button>
 
 </div>
@@ -557,7 +511,6 @@ Clear Everything
 
 
 draw();
-
 
 }
 
@@ -571,10 +524,19 @@ draw();
 function draw(){
 
 
-let cal=document.getElementById("calendar");
+calendar.innerHTML="";
 
 
-cal.innerHTML="";
+title.innerText=current.toLocaleString(
+
+"default",
+
+{
+month:"long",
+year:"numeric"
+}
+
+);
 
 
 
@@ -584,41 +546,32 @@ today.setHours(0,0,0,0);
 
 
 
-title.innerText=current.toLocaleString(
-"default",
-{
-month:"long",
-year:"numeric"
-}
-);
 
+let start=new Date(
 
-
-
-let first=new Date(
 current.getFullYear(),
+
 current.getMonth(),
+
 1
+
 ).getDay();
 
 
 
-
-
-for(let i=0;i<first;i++){
-
-cal.innerHTML+="<div></div>";
-
-}
+for(let i=0;i<start;i++)
+calendar.innerHTML+="<div></div>";
 
 
 
 
 
-let total=new Date(
+let days=new Date(
 
 current.getFullYear(),
+
 current.getMonth()+1,
+
 0
 
 ).getDate();
@@ -627,8 +580,7 @@ current.getMonth()+1,
 
 
 
-for(let d=1;d<=total;d++){
-
+for(let d=1;d<=days;d++){
 
 
 let box=document.createElement("div");
@@ -638,14 +590,23 @@ box.className="box";
 
 
 let date=new Date(
+
 current.getFullYear(),
+
 current.getMonth(),
+
 d
+
 );
 
 
 
 date.setHours(0,0,0,0);
+
+
+
+if(date<today)
+box.classList.add("disabled");
 
 
 
@@ -661,16 +622,7 @@ box.innerHTML=
 
 
 
-if(date<today){
-
-box.classList.add("disabled");
-
-}
-
-
-
 let people=box.querySelector(".people");
-
 
 
 
@@ -692,35 +644,25 @@ bd.getFullYear()==current.getFullYear()
 ){
 
 
-
 let p=document.createElement("div");
 
 
 p.className="person";
 
 
-p.innerHTML=
-
-`
-<span>${b.name}</span>
-`;
+p.innerHTML=b.name;
 
 
 
-if(
-
-b.name==username ||
-admin
-
-){
+if(admin || b.name==username){
 
 
 let x=document.createElement("button");
 
-
 x.className="delete";
 
 x.innerText="X";
+
 
 x.onclick=(e)=>{
 
@@ -731,16 +673,14 @@ removeBooking(b);
 };
 
 
-
 p.appendChild(x);
+
 
 }
 
 
 
-
 people.appendChild(p);
-
 
 
 }
@@ -748,7 +688,6 @@ people.appendChild(p);
 
 
 });
-
 
 
 
@@ -760,7 +699,10 @@ box.onclick=()=>addBooking(d);
 
 
 
-cal.appendChild(box);
+calendar.appendChild(box);
+
+
+}
 
 
 
@@ -768,8 +710,6 @@ cal.appendChild(box);
 
 
 
-
-}
 
 
 
@@ -784,14 +724,11 @@ let n=new Date(current);
 n.setMonth(n.getMonth()+x);
 
 
-
 let now=new Date();
-
 
 
 if(n < new Date(now.getFullYear(),now.getMonth(),1))
 return;
-
 
 
 current=n;
@@ -807,18 +744,7 @@ draw();
 
 
 
-
 async function addBooking(day){
-
-
-let d=new Date(
-
-current.getFullYear(),
-current.getMonth(),
-day
-
-);
-
 
 
 await addDoc(
@@ -829,15 +755,24 @@ collection(db,"startingDays"),
 
 name:username,
 
-date:d.toISOString(),
+date:new Date(
+
+current.getFullYear(),
+
+current.getMonth(),
+
+day
+
+).toISOString()
 
 }
 
 );
 
 
-
 }
+
+
 
 
 
@@ -846,22 +781,11 @@ date:d.toISOString(),
 async function removeBooking(b){
 
 
-if(b.name!=username && !admin){
-
-alert("You can only delete your own booking");
-
-return;
-
-}
-
-
 await deleteDoc(
 
 doc(db,"startingDays",b.id)
 
 );
-
-
 
 }
 
@@ -872,25 +796,18 @@ doc(db,"startingDays",b.id)
 window.clearAll=async function(){
 
 
-
 let snap=await getDocs(
 collection(db,"startingDays")
 );
 
 
 
-snap.forEach(async d=>{
-
-await deleteDoc(
+snap.forEach(d=>deleteDoc(
 doc(db,"startingDays",d.id)
-);
-
-});
+));
 
 
 }
-
-
 
 
 
@@ -909,7 +826,6 @@ bookings=[];
 
 snap.forEach(d=>{
 
-
 bookings.push({
 
 id:d.id,
@@ -918,13 +834,10 @@ id:d.id,
 
 });
 
-
 });
 
 
-
 draw();
-
 
 
 }
