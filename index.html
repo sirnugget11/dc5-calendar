@@ -1,98 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Starting Day for DC5</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
-*{
-box-sizing:border-box;
-font-family:Segoe UI,Arial,sans-serif;
-}
-
-
 body{
-
 margin:0;
-height:100vh;
+font-family:Segoe UI,Arial;
+background:linear-gradient(135deg,#0f2027,#2c5364);
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-
 }
 
 
 .card{
-
 background:white;
-width:90%;
-max-width:460px;
-padding:30px;
+width:95%;
+max-width:900px;
+padding:25px;
 border-radius:25px;
 box-shadow:0 20px 50px #0005;
-text-align:center;
-
 }
 
 
 h1{
-
-color:#203a43;
-
+text-align:center;
 }
 
 
 input{
-
+padding:12px;
 width:100%;
-padding:15px;
-border-radius:12px;
+border-radius:10px;
 border:1px solid #ccc;
-font-size:16px;
-margin:15px 0;
-
 }
 
 
 button{
-
+padding:10px 15px;
+border:0;
+border-radius:10px;
+cursor:pointer;
 background:#203a43;
 color:white;
-border:none;
-padding:12px 18px;
-border-radius:12px;
-cursor:pointer;
-font-size:16px;
-
 }
 
 
-button:hover{
-
-opacity:.85;
-
-}
-
-
-.hidden{
-
-display:none;
-
+.top{
+display:flex;
+gap:10px;
 }
 
 
 .header{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
-
 }
 
 
@@ -100,53 +70,57 @@ align-items:center;
 
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:7px;
-margin-top:20px;
+gap:8px;
 
 }
 
 
-.day{
+.box{
 
-padding:12px;
-border-radius:12px;
-cursor:pointer;
+min-height:100px;
+border:1px solid #ddd;
+border-radius:15px;
+padding:8px;
+background:#f8faff;
+
+}
+
+
+.box:hover{
 background:#eef3ff;
-
 }
 
 
-.day:hover{
+.number{
+font-weight:bold;
+}
+
+
+.person{
 
 background:#203a43;
 color:white;
-
+border-radius:8px;
+padding:4px;
+margin-top:5px;
+font-size:12px;
+display:flex;
+justify-content:space-between;
 }
 
 
-.weekday{
-
-font-weight:bold;
-color:#777;
-
+.delete{
+background:#d9534f;
+padding:3px 6px;
+font-size:11px;
 }
 
 
-.booking{
-
-margin-top:10px;
-background:#eef3ff;
-padding:12px;
+.admin{
+background:#ffdddd;
+padding:10px;
 border-radius:12px;
-
-}
-
-
-#message{
-
-margin-top:15px;
-color:#555;
-
+margin:15px 0;
 }
 
 </style>
@@ -161,46 +135,40 @@ color:#555;
 <div class="card">
 
 
-<div id="login">
-
-
 <h1>Starting Day for DC5 🚀</h1>
 
-<p>Enter your name</p>
+
+<div id="login">
+
+<input id="name" placeholder="Your name">
 
 
-<input id="nameInput" placeholder="Your name">
-
+<br><br>
 
 <button onclick="start()">
-Continue
+Enter Calendar
 </button>
-
 
 </div>
 
 
 
-<div id="calendarPage" class="hidden">
+<div id="app" style="display:none">
 
-
-<h1>Starting Day for DC5 🚀</h1>
-
-
-<h3 id="welcome"></h3>
 
 
 <div class="header">
 
-<button onclick="changeMonth(-1)">
+
+<button onclick="monthMove(-1)">
 ◀
 </button>
 
 
-<h2 id="month"></h2>
+<h2 id="title"></h2>
 
 
-<button onclick="changeMonth(1)">
+<button onclick="monthMove(1)">
 ▶
 </button>
 
@@ -209,26 +177,17 @@ Continue
 
 
 
+<div id="adminPanel"></div>
+
+
+
 <div class="calendar" id="calendar"></div>
 
 
-<p id="message">
-Choose your date
-</p>
-
-
-
-<h3>Starting Days</h3>
-
-
-<div id="bookings"></div>
-
-
 </div>
 
 
 </div>
-
 
 
 
@@ -236,7 +195,7 @@ Choose your date
 <script type="module">
 
 
-import { initializeApp }
+import {initializeApp}
 
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 
@@ -246,7 +205,10 @@ import {
 getFirestore,
 collection,
 addDoc,
-onSnapshot
+onSnapshot,
+deleteDoc,
+doc,
+getDocs
 
 }
 
@@ -255,38 +217,36 @@ from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 
 
+const firebaseConfig={
 
-const firebaseConfig = {
+apiKey:"AIzaSyAR8EByZhPKm8Miqwwh_1wM2oruBoncCkU",
 
-apiKey: "AIzaSyAR8EByZhPKm8Miqwwh_1wM2oruBoncCkU",
+authDomain:"dc5-calendar.firebaseapp.com",
 
-authDomain: "dc5-calendar.firebaseapp.com",
+projectId:"dc5-calendar",
 
-projectId: "dc5-calendar",
+storageBucket:"dc5-calendar.firebasestorage.app",
 
-storageBucket: "dc5-calendar.firebasestorage.app",
+messagingSenderId:"102677604313",
 
-messagingSenderId: "102677604313",
-
-appId: "1:102677604313:web:d56a37c93bf49f4c8b5bc8"
+appId:"1:102677604313:web:d56a37c93bf49f4c8b5bc8"
 
 };
 
 
+const app=initializeApp(firebaseConfig);
 
-
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
+const db=getFirestore(app);
 
 
 
 let username="";
 
+let admin=false;
+
 let current=new Date();
 
+let bookings=[];
 
 
 
@@ -294,78 +254,63 @@ let current=new Date();
 window.start=function(){
 
 
-username=document.getElementById("nameInput").value.trim();
+username=document.getElementById("name").value.trim();
 
 
-if(!username){
+if(!username)return alert("Enter name");
 
-alert("Enter your name");
 
-return;
+admin=username.toLowerCase()=="admin";
+
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("app").style.display="block";
+
+
+
+draw();
+
+
+if(admin){
+
+document.getElementById("adminPanel").innerHTML=
+
+`
+<div class="admin">
+
+<b>ADMIN MODE</b><br><br>
+
+<button onclick="clearAll()">
+Clear Everything
+</button>
+
+</div>
+`;
 
 }
 
 
 
-document.getElementById("login").classList.add("hidden");
-
-
-document.getElementById("calendarPage").classList.remove("hidden");
-
-
-document.getElementById("welcome").innerText =
-"Welcome "+username+" 👋";
-
-
-drawCalendar();
-
-
 }
 
 
 
 
 
-function drawCalendar(){
+function draw(){
 
 
 let cal=document.getElementById("calendar");
-
 
 cal.innerHTML="";
 
 
 
-let days =
-["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+document.getElementById("title").innerText=
 
-
-
-days.forEach(d=>{
-
-let x=document.createElement("div");
-
-x.className="weekday";
-
-x.innerText=d;
-
-cal.appendChild(x);
-
-});
-
-
-
-let year=current.getFullYear();
-
-let month=current.getMonth();
-
-
-
-document.getElementById("month").innerText =
-
-new Date(year,month)
-
-.toLocaleString("default",
+current.toLocaleString(
+"default",
 {
 month:"long",
 year:"numeric"
@@ -373,103 +318,206 @@ year:"numeric"
 
 
 
-let first =
-new Date(year,month,1).getDay();
-
-
-
-for(let i=0;i<first;i++){
-
-cal.appendChild(document.createElement("div"));
-
-}
-
-
-
-let total =
-new Date(year,month+1,0).getDate();
-
-
-
-for(let i=1;i<=total;i++){
-
-
-let b=document.createElement("div");
-
-
-b.className="day";
-
-
-b.innerText=i;
-
-
-
-b.onclick=()=>saveDate(i);
-
-
-
-cal.appendChild(b);
-
-
-}
-
-
-}
-
-
-
-
-window.changeMonth=function(amount){
-
-current.setMonth(
-current.getMonth()+amount
-);
-
-drawCalendar();
-
-}
-
-
-
-
-
-
-async function saveDate(day){
-
-
-let chosen =
+let first=
 new Date(
 current.getFullYear(),
 current.getMonth(),
+1
+).getDay();
+
+
+
+for(let i=0;i<first;i++)
+cal.innerHTML+="<div></div>";
+
+
+
+let total=
+new Date(
+current.getFullYear(),
+current.getMonth()+1,
+0
+).getDate();
+
+
+
+for(let d=1;d<=total;d++){
+
+
+let div=document.createElement("div");
+
+div.className="box";
+
+
+div.innerHTML=
+
+`
+<div class="number">${d}</div>
+`;
+
+
+
+bookings.forEach(b=>{
+
+
+let date=new Date(b.date);
+
+
+if(
+
+date.getDate()==d &&
+date.getMonth()==current.getMonth() &&
+date.getFullYear()==current.getFullYear()
+
+){
+
+
+let p=document.createElement("div");
+
+p.className="person";
+
+
+p.innerHTML=
+
+`
+
+${b.name}
+
+<button class="delete">
+X
+</button>
+
+`;
+
+
+
+p.querySelector("button")
+.onclick=()=>removeBooking(b);
+
+
+
+div.appendChild(p);
+
+
+
+}
+
+
+});
+
+
+
+div.onclick=()=>addBooking(d);
+
+
+
+cal.appendChild(div);
+
+
+}
+
+
+
+}
+
+
+
+async function addBooking(day){
+
+
+let chosen=new Date(
+
+current.getFullYear(),
+current.getMonth(),
 day
+
 );
 
 
 
 await addDoc(
-
 collection(db,"startingDays"),
-
 {
 
 name:username,
 
-date:chosen.toDateString(),
-
-createdAt:Date.now()
+date:chosen.toISOString()
 
 }
 
 );
 
 
+}
 
-document.getElementById("message").innerText =
-"Saved: "+chosen.toDateString();
+
+
+
+async function removeBooking(b){
+
+
+if(
+b.name!=username &&
+!admin
+){
+
+alert("You can only delete your own booking");
+
+return;
+
+}
+
+
+await deleteDoc(
+doc(db,"startingDays",b.id)
+);
 
 
 }
 
+
+
+
+
+window.monthMove=function(x){
+
+current.setMonth(
+current.getMonth()+x
+);
+
+draw();
+
+}
+
+
+
+
+
+window.clearAll=async function(){
+
+
+if(!admin)return;
+
+
+if(!confirm("Delete everything?"))
+return;
+
+
+let snap=await getDocs(
+collection(db,"startingDays")
+);
+
+
+snap.forEach(async d=>{
+
+await deleteDoc(
+doc(db,"startingDays",d.id)
+);
+
+});
+
+
+}
 
 
 
@@ -479,47 +527,30 @@ onSnapshot(
 
 collection(db,"startingDays"),
 
-(snapshot)=>{
+snap=>{
 
 
-let box=document.getElementById("bookings");
+bookings=[];
 
 
-box.innerHTML="";
+snap.forEach(d=>{
 
+bookings.push({
 
-
-snapshot.forEach(doc=>{
-
-
-let data=doc.data();
-
-
-
-box.innerHTML +=
-
-`
-
-<div class="booking">
-
-<b>${data.name}</b><br>
-
-${data.date}
-
-</div>
-
-`;
-
-
+id:d.id,
+...d.data()
 
 });
+
+});
+
+
+draw();
 
 
 }
 
 );
-
-
 
 
 
