@@ -13,7 +13,7 @@
 
 *{
 box-sizing:border-box;
-font-family:Segoe UI,Arial,sans-serif;
+font-family:Inter,Segoe UI,Arial,sans-serif;
 }
 
 
@@ -21,55 +21,87 @@ body{
 
 margin:0;
 min-height:100vh;
-background:linear-gradient(135deg,#0f2027,#2c5364);
+
+background:
+linear-gradient(135deg,#081f2c,#14506b);
+
 display:flex;
 justify-content:center;
 align-items:center;
 
+padding:15px;
+
 }
+
 
 
 .card{
 
+width:100%;
+max-width:900px;
+
+height:min(90vh,850px);
+
 background:white;
-width:95%;
-max-width:1000px;
-padding:30px;
-border-radius:25px;
-box-shadow:0 20px 50px #0005;
+
+border-radius:28px;
+
+padding:25px;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.35);
+
+overflow:hidden;
 
 }
+
 
 
 h1{
 
 text-align:center;
-color:#203a43;
+margin:0 0 20px;
+
+color:#123746;
+
+font-size:clamp(22px,5vw,34px);
 
 }
+
 
 
 input{
 
 width:100%;
+
 padding:14px;
-border-radius:12px;
-border:1px solid #ccc;
+
+border-radius:14px;
+
+border:2px solid #ddd;
+
 font-size:16px;
 
 }
 
 
+
 button{
 
-background:#203a43;
+border:0;
+
+background:#123746;
+
 color:white;
-border:none;
-padding:10px 15px;
-border-radius:10px;
+
+border-radius:12px;
+
+padding:12px 18px;
+
 cursor:pointer;
 
 }
+
 
 
 button:hover{
@@ -80,13 +112,24 @@ opacity:.85;
 
 
 
+
 .header{
 
+height:55px;
+
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
 
-margin:20px 0;
+}
+
+
+
+#title{
+
+font-size:clamp(18px,4vw,25px);
 
 }
 
@@ -94,21 +137,38 @@ margin:20px 0;
 
 .calendar{
 
+height:calc(100% - 140px);
+
 display:grid;
+
 grid-template-columns:repeat(7,1fr);
+
+grid-template-rows:repeat(6,1fr);
+
 border:2px solid #ddd;
+
+border-radius:18px;
+
+overflow:hidden;
 
 }
 
 
 
+
 .box{
 
-min-height:120px;
+position:relative;
+
 border-right:1px solid #ddd;
+
 border-bottom:1px solid #ddd;
+
 padding:8px;
-background:#fafafa;
+
+background:#fbfdff;
+
+overflow:hidden;
 
 }
 
@@ -116,7 +176,20 @@ background:#fafafa;
 
 .box:hover{
 
-background:#eef5ff;
+background:#f0f7ff;
+
+}
+
+
+
+
+.number{
+
+font-weight:bold;
+
+color:#123746;
+
+font-size:16px;
 
 }
 
@@ -124,36 +197,56 @@ background:#eef5ff;
 
 .disabled{
 
-background:#e8e8e8;
+background:#eee;
+
 color:#999;
+
 pointer-events:none;
 
 }
 
 
 
-.number{
 
-font-weight:bold;
-font-size:18px;
+
+.people{
+
+position:absolute;
+
+left:6px;
+right:6px;
+
+top:30px;
+bottom:6px;
+
+overflow-y:auto;
 
 }
 
 
 
+
 .person{
 
-margin-top:8px;
-background:#203a43;
+background:#123746;
+
 color:white;
+
+border-radius:10px;
+
 padding:5px;
-border-radius:8px;
+
+margin-bottom:5px;
+
+font-size:12px;
 
 display:flex;
-justify-content:space-between;
+
 align-items:center;
 
-font-size:13px;
+justify-content:space-between;
+
+gap:5px;
 
 }
 
@@ -162,27 +255,93 @@ font-size:13px;
 .delete{
 
 background:#e74c3c;
+
 padding:3px 7px;
+
 font-size:11px;
 
 }
 
 
 
+
+
 .admin{
 
-background:#ffe2e2;
-padding:15px;
-border-radius:12px;
-margin-bottom:15px;
+background:#ffe7e7;
+
+padding:12px;
+
+border-radius:14px;
+
+margin-bottom:10px;
 
 }
 
 
+
+@media(max-width:600px){
+
+
+.card{
+
+height:95vh;
+
+padding:15px;
+
+border-radius:20px;
+
+}
+
+
+.calendar{
+
+height:calc(100% - 120px);
+
+}
+
+
+.box{
+
+padding:5px;
+
+}
+
+
+.number{
+
+font-size:13px;
+
+}
+
+
+.person{
+
+font-size:10px;
+
+padding:3px;
+
+}
+
+
+
+button{
+
+padding:10px;
+
+}
+
+
+
+}
+
+
+
 </style>
 
-
 </head>
+
+
 
 
 <body>
@@ -191,23 +350,28 @@ margin-bottom:15px;
 <div class="card">
 
 
+
 <div id="login">
 
 
-<h1>Starting Day for DC5 🚀</h1>
+<h1>
+Starting Day for DC5 🚀
+</h1>
 
 
-<p>Enter your name</p>
+<input 
+id="name"
+placeholder="Enter your name">
 
-
-<input id="name" placeholder="Your name">
 
 
 <br><br>
 
 
 <button onclick="start()">
+
 Enter Calendar
+
 </button>
 
 
@@ -217,13 +381,18 @@ Enter Calendar
 
 
 
+
 <div id="app" style="display:none">
 
 
-<h1>Starting Day for DC5 🚀</h1>
+<h1>
+Starting Day for DC5 🚀
+</h1>
+
 
 
 <div id="adminPanel"></div>
+
 
 
 
@@ -251,11 +420,12 @@ Enter Calendar
 <div class="calendar" id="calendar"></div>
 
 
-</div>
 
 
 </div>
 
+
+</div>
 
 
 
@@ -304,9 +474,7 @@ messagingSenderId:"102677604313",
 
 appId:"1:102677604313:web:d56a37c93bf49f4c8b5bc8"
 
-
 };
-
 
 
 
@@ -315,8 +483,6 @@ const app=initializeApp(firebaseConfig);
 
 
 const db=getFirestore(app);
-
-
 
 
 
@@ -333,17 +499,20 @@ let bookings=[];
 
 
 
+
 window.start=function(){
 
 
-
-username=document.getElementById("name").value.trim();
+username=document
+.getElementById("name")
+.value
+.trim();
 
 
 
 if(!username){
 
-alert("Enter your name");
+alert("Enter name");
 
 return;
 
@@ -361,19 +530,22 @@ document.getElementById("app").style.display="block";
 
 
 
+
 if(admin){
 
 
-document.getElementById("adminPanel").innerHTML=
+adminPanel.innerHTML=
 
 `
 
 <div class="admin">
 
-<b>ADMIN MODE</b><br><br>
+<b>Admin Mode</b><br><br>
 
 <button onclick="clearAll()">
-Clear Entire List
+
+Clear Everything
+
 </button>
 
 </div>
@@ -399,26 +571,20 @@ draw();
 function draw(){
 
 
+let cal=document.getElementById("calendar");
 
-let calendar=document.getElementById("calendar");
 
-
-calendar.innerHTML="";
+cal.innerHTML="";
 
 
 
 let today=new Date();
 
-
 today.setHours(0,0,0,0);
 
 
 
-
-
-document.getElementById("title").innerText=
-
-current.toLocaleString(
+title.innerText=current.toLocaleString(
 "default",
 {
 month:"long",
@@ -429,40 +595,7 @@ year:"numeric"
 
 
 
-
-let back =
-document.querySelector(".header button:first-child");
-
-
-
-if(
-
-current.getFullYear()==today.getFullYear()
-
-&&
-
-current.getMonth()==today.getMonth()
-
-){
-
-back.disabled=true;
-
-}
-
-else{
-
-back.disabled=false;
-
-}
-
-
-
-
-
-
-let first=
-
-new Date(
+let first=new Date(
 current.getFullYear(),
 current.getMonth(),
 1
@@ -471,9 +604,10 @@ current.getMonth(),
 
 
 
+
 for(let i=0;i<first;i++){
 
-calendar.innerHTML+="<div></div>";
+cal.innerHTML+="<div></div>";
 
 }
 
@@ -481,14 +615,13 @@ calendar.innerHTML+="<div></div>";
 
 
 
-let total=
+let total=new Date(
 
-new Date(
 current.getFullYear(),
 current.getMonth()+1,
 0
-).getDate();
 
+).getDate();
 
 
 
@@ -500,32 +633,19 @@ for(let d=1;d<=total;d++){
 
 let box=document.createElement("div");
 
-
 box.className="box";
 
 
 
 let date=new Date(
-
 current.getFullYear(),
 current.getMonth(),
 d
-
 );
 
 
 
 date.setHours(0,0,0,0);
-
-
-
-
-
-if(date < today){
-
-box.classList.add("disabled");
-
-}
 
 
 
@@ -535,10 +655,21 @@ box.innerHTML=
 
 <div class="number">${d}</div>
 
+<div class="people"></div>
+
 `;
 
 
 
+if(date<today){
+
+box.classList.add("disabled");
+
+}
+
+
+
+let people=box.querySelector(".people");
 
 
 
@@ -546,45 +677,39 @@ box.innerHTML=
 bookings.forEach(b=>{
 
 
-
-let saved=new Date(b.date);
+let bd=new Date(b.date);
 
 
 
 if(
 
-saved.getDate()==d &&
+bd.getDate()==d &&
 
-saved.getMonth()==current.getMonth() &&
+bd.getMonth()==current.getMonth() &&
 
-saved.getFullYear()==current.getFullYear()
+bd.getFullYear()==current.getFullYear()
 
 ){
 
 
 
-let person=document.createElement("div");
+let p=document.createElement("div");
 
 
-person.className="person";
+p.className="person";
 
 
-
-person.innerHTML=
+p.innerHTML=
 
 `
-
 <span>${b.name}</span>
-
 `;
-
 
 
 
 if(
 
 b.name==username ||
-
 admin
 
 ){
@@ -597,8 +722,6 @@ x.className="delete";
 
 x.innerText="X";
 
-
-
 x.onclick=(e)=>{
 
 e.stopPropagation();
@@ -609,19 +732,18 @@ removeBooking(b);
 
 
 
-person.appendChild(x);
-
-
-}
-
-
-
-box.appendChild(person);
-
-
+p.appendChild(x);
 
 }
 
+
+
+
+people.appendChild(p);
+
+
+
+}
 
 
 
@@ -630,22 +752,15 @@ box.appendChild(person);
 
 
 
-
-if(date >= today){
-
+if(date>=today){
 
 box.onclick=()=>addBooking(d);
 
-
 }
 
 
 
-calendar.appendChild(box);
-
-
-
-}
+cal.appendChild(box);
 
 
 
@@ -654,61 +769,38 @@ calendar.appendChild(box);
 
 
 
+}
 
 
 
-window.monthMove=function(amount){
+
+
+window.monthMove=function(x){
+
+
+let n=new Date(current);
+
+
+n.setMonth(n.getMonth()+x);
 
 
 
-let next=new Date(current);
+let now=new Date();
 
 
 
-next.setMonth(
-next.getMonth()+amount
-);
-
-
-
-let today=new Date();
-
-
-
-if(
-
-next.getFullYear()<today.getFullYear()
-
-||
-
-(
-
-next.getFullYear()==today.getFullYear()
-
-&&
-
-next.getMonth()<today.getMonth()
-
-)
-
-){
-
+if(n < new Date(now.getFullYear(),now.getMonth(),1))
 return;
 
-}
 
 
-
-
-current=next;
+current=n;
 
 
 draw();
 
 
-
 }
-
 
 
 
@@ -719,18 +811,13 @@ draw();
 async function addBooking(day){
 
 
-
-let chosen=new Date(
+let d=new Date(
 
 current.getFullYear(),
-
 current.getMonth(),
-
 day
 
 );
-
-
 
 
 
@@ -742,9 +829,7 @@ collection(db,"startingDays"),
 
 name:username,
 
-date:chosen.toISOString(),
-
-created:Date.now()
+date:d.toISOString(),
 
 }
 
@@ -758,24 +843,16 @@ created:Date.now()
 
 
 
-
-
 async function removeBooking(b){
 
 
-
-if(
-
-b.name!=username && !admin
-
-){
+if(b.name!=username && !admin){
 
 alert("You can only delete your own booking");
 
 return;
 
 }
-
 
 
 await deleteDoc(
@@ -792,41 +869,21 @@ doc(db,"startingDays",b.id)
 
 
 
-
-
-
 window.clearAll=async function(){
 
 
 
-if(!admin)return;
-
-
-
-if(!confirm("Delete everything?"))
-return;
-
-
-
-
 let snap=await getDocs(
-
 collection(db,"startingDays")
-
 );
-
 
 
 
 snap.forEach(async d=>{
 
-
 await deleteDoc(
-
 doc(db,"startingDays",d.id)
-
 );
-
 
 });
 
@@ -840,19 +897,17 @@ doc(db,"startingDays",d.id)
 
 
 
-
 onSnapshot(
 
 collection(db,"startingDays"),
 
-snapshot=>{
+snap=>{
 
 
 bookings=[];
 
 
-
-snapshot.forEach(d=>{
+snap.forEach(d=>{
 
 
 bookings.push({
@@ -875,8 +930,6 @@ draw();
 }
 
 );
-
-
 
 
 
