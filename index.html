@@ -8,10 +8,9 @@
 
 <title>Starting Day for DC5</title>
 
-
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
 
 
 *{
@@ -25,8 +24,7 @@ body{
 margin:0;
 height:100vh;
 
-background:
-radial-gradient(circle at top,#1d7b91,#061923);
+background:linear-gradient(135deg,#061923,#16758a);
 
 display:flex;
 align-items:center;
@@ -41,55 +39,63 @@ padding:20px;
 .container{
 
 width:100%;
-max-width:1100px;
-
+max-width:1150px;
 height:90vh;
 
-background:rgba(255,255,255,.92);
+background:#ffffffee;
 
-border-radius:32px;
+border-radius:30px;
 
-padding:30px;
+padding:25px;
 
-box-shadow:
-0 30px 80px #0007;
+box-shadow:0 30px 70px #0007;
 
 display:flex;
-
 flex-direction:column;
 
 }
 
 
 
-
-.logo{
+h1{
 
 text-align:center;
 
-}
-
-
-.logo h1{
+color:#092f3d;
 
 margin:0;
 
-font-size:clamp(28px,5vw,48px);
-
-font-weight:800;
-
-color:#092f3d;
+font-size:clamp(25px,5vw,42px);
 
 }
 
 
-.logo p{
 
+.subtitle{
+
+text-align:center;
 color:#64748b;
 
+margin-bottom:20px;
+
 }
 
 
+
+
+#login{
+
+flex:1;
+
+display:flex;
+flex-direction:column;
+
+justify-content:center;
+align-items:center;
+
+gap:20px;
+
+}
 
 
 
@@ -101,11 +107,9 @@ padding:18px;
 
 font-size:18px;
 
-border-radius:18px;
+border-radius:16px;
 
-border:2px solid #dce7ed;
-
-outline:none;
+border:2px solid #ddd;
 
 }
 
@@ -117,17 +121,15 @@ background:#092f3d;
 
 color:white;
 
-border:none;
+border:0;
 
-border-radius:14px;
+border-radius:12px;
 
-padding:13px 22px;
+padding:12px 18px;
 
 cursor:pointer;
 
 font-weight:700;
-
-transition:.2s;
 
 }
 
@@ -135,26 +137,7 @@ transition:.2s;
 
 button:hover{
 
-transform:translateY(-2px);
-
-}
-
-
-
-
-.login{
-
-flex:1;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-justify-content:center;
-
-gap:25px;
+opacity:.85;
 
 }
 
@@ -166,9 +149,81 @@ gap:25px;
 
 display:none;
 
+flex:1;
+
+min-height:0;
+
+}
+
+
+
+
+
+.layout{
+
+display:flex;
+
 height:100%;
 
+gap:20px;
+
+}
+
+
+
+
+.sidebar{
+
+width:220px;
+
+background:#f1f7fa;
+
+border-radius:20px;
+
+padding:20px;
+
+display:flex;
+
 flex-direction:column;
+
+gap:15px;
+
+}
+
+
+
+.sidebar h3{
+
+margin:0;
+
+color:#092f3d;
+
+}
+
+
+
+.adminBox{
+
+background:#fff1f2;
+
+padding:15px;
+
+border-radius:15px;
+
+}
+
+
+
+
+.calendarArea{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+min-width:0;
 
 }
 
@@ -179,13 +234,14 @@ flex-direction:column;
 
 display:flex;
 
-align-items:center;
-
 justify-content:space-between;
 
-margin:20px 0;
+align-items:center;
+
+height:50px;
 
 }
+
 
 
 
@@ -211,14 +267,13 @@ grid-template-columns:repeat(7,1fr);
 
 text-align:center;
 
-font-weight:700;
+font-weight:bold;
 
 color:#64748b;
 
 margin-bottom:8px;
 
 }
-
 
 
 
@@ -231,13 +286,13 @@ display:grid;
 
 grid-template-columns:repeat(7,1fr);
 
-grid-template-rows:repeat(6,130px);
+grid-template-rows:repeat(6,1fr);
 
-border-radius:22px;
+border:1px solid #dbe5ea;
+
+border-radius:20px;
 
 overflow:hidden;
-
-border:1px solid #d9e3e8;
 
 }
 
@@ -249,26 +304,21 @@ border:1px solid #d9e3e8;
 
 position:relative;
 
-background:white;
-
 border-right:1px solid #e5edf2;
 
 border-bottom:1px solid #e5edf2;
 
 padding:8px;
 
-transition:.2s;
+background:white;
 
 }
 
 
 
-
 .box:hover:not(.disabled){
 
-background:#f0fbff;
-
-transform:scale(.98);
+background:#eefaff;
 
 cursor:pointer;
 
@@ -282,19 +332,19 @@ content:"+ Add";
 
 position:absolute;
 
-bottom:8px;
-
 right:8px;
+
+bottom:8px;
 
 background:#092f3d;
 
 color:white;
 
-padding:4px 8px;
+font-size:11px;
+
+padding:5px 8px;
 
 border-radius:20px;
-
-font-size:11px;
 
 }
 
@@ -311,17 +361,15 @@ color:#092f3d;
 
 
 
-
 .disabled{
 
-background:#f1f5f9;
+background:#eee;
 
-color:#94a3b8;
+color:#999;
 
 pointer-events:none;
 
 }
-
 
 
 
@@ -343,14 +391,13 @@ overflow:auto;
 
 
 
-
 .person{
 
 background:#092f3d;
 
 color:white;
 
-border-radius:10px;
+border-radius:9px;
 
 padding:5px;
 
@@ -368,33 +415,17 @@ align-items:center;
 
 
 
-
 .delete{
 
 background:#ef4444;
 
-padding:3px 8px;
-
-font-size:11px;
+padding:2px 7px;
 
 }
 
 
 
-.admin{
-
-background:#fff1f2;
-
-padding:12px;
-
-border-radius:15px;
-
-}
-
-
-
-
-@media(max-width:600px){
+@media(max-width:750px){
 
 
 .container{
@@ -406,19 +437,30 @@ padding:15px;
 }
 
 
+.layout{
 
-.weekdays{
+flex-direction:column;
 
-font-size:12px;
+}
+
+
+
+.sidebar{
+
+width:100%;
+
+height:auto;
 
 }
 
 
-.box{
 
-padding:4px;
+.calendar{
+
+min-height:400px;
 
 }
+
 
 
 .person{
@@ -426,15 +468,6 @@ padding:4px;
 font-size:9px;
 
 }
-
-
-
-.logo h1{
-
-font-size:25px;
-
-}
-
 
 
 }
@@ -446,34 +479,29 @@ font-size:25px;
 </head>
 
 
-<body>
 
+
+<body>
 
 
 <div class="container">
 
 
-
-<div class="logo">
-
 <h1>
 Starting Day for DC5 🚀
 </h1>
 
-<p>
-Choose your starting day
-</p>
 
+<div class="subtitle">
+Choose your starting day
 </div>
 
 
 
+<div id="login">
 
-<div id="login" class="login">
 
-
-<input 
-id="nameInput"
+<input id="nameInput"
 placeholder="Your name">
 
 
@@ -489,12 +517,37 @@ Enter Calendar
 
 
 
+
 <div id="calendarApp">
 
 
+<div class="layout">
 
-<div id="adminPanel"></div>
 
+
+
+
+<div class="sidebar">
+
+
+<h3>
+Menu
+</h3>
+
+
+<div id="adminPanel">
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="calendarArea">
 
 
 
@@ -506,9 +559,7 @@ Enter Calendar
 </button>
 
 
-
 <div class="month" id="monthTitle"></div>
-
 
 
 <button id="nextBtn">
@@ -516,9 +567,7 @@ Enter Calendar
 </button>
 
 
-
 </div>
-
 
 
 
@@ -538,13 +587,18 @@ Enter Calendar
 
 
 
-<div class="calendar" id="calendar"></div>
+<div id="calendar" class="calendar"></div>
 
 
 
 
 </div>
 
+
+</div>
+
+
+</div>
 
 </div>
 
@@ -576,7 +630,6 @@ from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 
 
-
 const firebaseConfig={
 
 
@@ -595,13 +648,9 @@ appId:"1:102677604313:web:d56a37c93bf49f4c8b5bc8"
 };
 
 
-
-
-
 const app=initializeApp(firebaseConfig);
 
 const db=getFirestore(app);
-
 
 
 
@@ -615,8 +664,6 @@ let bookings=[];
 
 
 
-
-
 enterButton.onclick=()=>{
 
 
@@ -626,21 +673,24 @@ username=nameInput.value.trim();
 if(!username)return;
 
 
+
 admin=username.toLowerCase()=="admin";
 
 
 login.style.display="none";
 
-calendarApp.style.display="flex";
+calendarApp.style.display="block";
 
 
 
 if(admin){
 
+
 adminPanel.innerHTML=
 
 `
-<div class="admin">
+
+<div class="adminBox">
 
 <b>Admin Mode</b>
 
@@ -651,19 +701,21 @@ Clear All
 </button>
 
 </div>
+
 `;
 
+
+
 clearBtn.onclick=clearAll;
+
 
 }
 
 
+
 draw();
 
-
 };
-
-
 
 
 
@@ -678,13 +730,13 @@ calendar.innerHTML="";
 monthTitle.innerText=current.toLocaleString(
 
 "default",
+
 {
 month:"long",
 year:"numeric"
 }
 
 );
-
 
 
 
@@ -695,17 +747,17 @@ today.setHours(0,0,0,0);
 
 
 let first=new Date(
+
 current.getFullYear(),
 current.getMonth(),
 1
+
 ).getDay();
 
 
 
 for(let i=0;i<first;i++)
 calendar.innerHTML+="<div></div>";
-
-
 
 
 
@@ -716,8 +768,6 @@ current.getMonth()+1,
 0
 
 ).getDate();
-
-
 
 
 
@@ -732,31 +782,29 @@ box.className="box";
 
 
 let date=new Date(
+
 current.getFullYear(),
 current.getMonth(),
 d
+
 );
 
 
 
-date.setHours(0,0,0,0);
-
-
-
 if(date<today)
-
 box.classList.add("disabled");
-
 
 
 
 box.innerHTML=
 
 `
-<div class="number">${d}</div>
-<div class="people"></div>
-`;
 
+<div class="number">${d}</div>
+
+<div class="people"></div>
+
+`;
 
 
 
@@ -782,6 +830,7 @@ bd.getFullYear()==current.getFullYear()
 
 let p=document.createElement("div");
 
+
 p.className="person";
 
 
@@ -793,6 +842,7 @@ if(admin||b.name==username){
 
 
 let x=document.createElement("button");
+
 
 x.className="delete";
 
@@ -820,16 +870,13 @@ people.appendChild(p);
 }
 
 
-
 });
-
 
 
 
 box.onclick=()=>{
 
 if(!box.classList.contains("disabled"))
-
 addBooking(d);
 
 };
@@ -861,23 +908,22 @@ return;
 
 current.setMonth(current.getMonth()-1);
 
+
 draw();
 
-
 };
-
-
 
 
 
 nextBtn.onclick=()=>{
 
+
 current.setMonth(current.getMonth()+1);
 
 draw();
 
-};
 
+};
 
 
 
@@ -886,6 +932,7 @@ async function addBooking(day){
 
 
 await addDoc(
+
 collection(db,"startingDays"),
 
 {
@@ -902,9 +949,7 @@ day
 
 });
 
-
 }
-
 
 
 
@@ -916,7 +961,9 @@ if(!admin&&b.name!=username)return;
 
 
 await deleteDoc(
+
 doc(db,"startingDays",b.id)
+
 );
 
 
@@ -925,14 +972,14 @@ doc(db,"startingDays",b.id)
 
 
 
-
 async function clearAll(){
 
 
 let snap=await getDocs(
-collection(db,"startingDays")
-);
 
+collection(db,"startingDays")
+
+);
 
 
 snap.forEach(d=>
@@ -949,9 +996,6 @@ doc(db,"startingDays",d.id)
 
 
 
-
-
-
 onSnapshot(
 
 collection(db,"startingDays"),
@@ -964,6 +1008,7 @@ bookings=[];
 
 snap.forEach(d=>{
 
+
 bookings.push({
 
 id:d.id,
@@ -971,6 +1016,7 @@ id:d.id,
 ...d.data()
 
 });
+
 
 });
 
@@ -985,5 +1031,4 @@ draw();
 
 
 </body>
-
 </html>
