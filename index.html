@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta charset="UTF-8">
@@ -27,8 +28,8 @@ height:100vh;
 background:linear-gradient(135deg,#061923,#16758a);
 
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 
 padding:15px;
 
@@ -49,9 +50,10 @@ border-radius:28px;
 
 padding:25px;
 
-box-shadow:0 30px 70px #0007;
+box-shadow:0 30px 70px #0008;
 
 display:flex;
+
 flex-direction:column;
 
 }
@@ -66,8 +68,6 @@ color:#092f3d;
 
 margin:0;
 
-font-size:clamp(25px,5vw,42px);
-
 }
 
 
@@ -75,9 +75,10 @@ font-size:clamp(25px,5vw,42px);
 .subtitle{
 
 text-align:center;
+
 color:#64748b;
 
-margin-bottom:15px;
+margin-bottom:20px;
 
 }
 
@@ -102,10 +103,7 @@ gap:20px;
 
 
 
-
 input,textarea{
-
-width:100%;
 
 padding:14px;
 
@@ -115,6 +113,8 @@ border:2px solid #dbe5ea;
 
 font-size:16px;
 
+width:100%;
+
 }
 
 
@@ -123,10 +123,7 @@ textarea{
 
 height:90px;
 
-resize:none;
-
 }
-
 
 
 
@@ -170,7 +167,6 @@ height:100%;
 
 
 
-
 .layout{
 
 display:flex;
@@ -186,7 +182,7 @@ gap:20px;
 
 .sidebar{
 
-width:240px;
+width:250px;
 
 background:#f1f7fa;
 
@@ -199,8 +195,6 @@ padding:20px;
 
 
 .sidebar h2{
-
-margin-top:0;
 
 color:#092f3d;
 
@@ -219,18 +213,18 @@ line-height:1.5;
 
 
 
+
 .adminBox{
 
-background:#ffe9ec;
+margin-top:20px;
+
+background:#ffe7eb;
 
 padding:15px;
 
 border-radius:15px;
 
-margin-top:20px;
-
 }
-
 
 
 
@@ -248,6 +242,7 @@ flex-direction:column;
 
 
 
+
 .toolbar{
 
 display:flex;
@@ -257,6 +252,7 @@ justify-content:space-between;
 align-items:center;
 
 }
+
 
 
 
@@ -311,16 +307,15 @@ overflow:hidden;
 
 
 
-
 .box{
 
 position:relative;
 
+padding:8px;
+
 border-right:1px solid #ddd;
 
 border-bottom:1px solid #ddd;
-
-padding:8px;
 
 background:#fff;
 
@@ -354,7 +349,7 @@ background:#092f3d;
 
 color:white;
 
-padding:5px 8px;
+padding:5px;
 
 border-radius:20px;
 
@@ -372,12 +367,11 @@ pointer-events:none;
 
 
 
-
 .people{
 
 position:absolute;
 
-top:28px;
+top:25px;
 
 bottom:5px;
 
@@ -398,9 +392,9 @@ background:#092f3d;
 
 color:white;
 
-padding:5px;
-
 border-radius:8px;
+
+padding:5px;
 
 margin-bottom:5px;
 
@@ -426,6 +420,7 @@ padding:3px 8px;
 
 
 
+
 @media(max-width:750px){
 
 
@@ -436,6 +431,7 @@ flex-direction:column;
 }
 
 
+
 .sidebar{
 
 width:100%;
@@ -443,19 +439,24 @@ width:100%;
 }
 
 
+
 .calendar{
 
-min-height:420px;
+min-height:400px;
 
 }
 
 
 }
+
+
 
 </style>
 
 
 </head>
+
+
 
 
 <body>
@@ -476,11 +477,11 @@ Choose your starting day
 
 
 
+
 <div id="login">
 
 
-<input id="nameInput"
-placeholder="Your name">
+<input id="nameInput" placeholder="Your name">
 
 
 <button id="enterButton">
@@ -489,6 +490,9 @@ Enter Calendar
 
 
 </div>
+
+
+
 
 
 
@@ -516,11 +520,14 @@ No information yet.
 
 
 
+
 <div id="adminControls"></div>
 
 
 
 </div>
+
+
 
 
 
@@ -538,7 +545,9 @@ No information yet.
 </button>
 
 
+
 <div class="month" id="monthTitle"></div>
+
 
 
 <button id="nextBtn">
@@ -546,7 +555,9 @@ No information yet.
 </button>
 
 
+
 </div>
+
 
 
 
@@ -565,10 +576,20 @@ No information yet.
 
 
 
+
 <div id="calendar" class="calendar"></div>
 
 
 
+
+</div>
+
+
+
+
+</div>
+
+
 </div>
 
 
@@ -576,9 +597,7 @@ No information yet.
 </div>
 
 
-</div>
 
-</div>
 
 
 
@@ -593,15 +612,16 @@ import {initializeApp}
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 
 
+
 import {
 
 getFirestore,
 collection,
 doc,
 setDoc,
-getDocs,
 addDoc,
 deleteDoc,
+getDocs,
 onSnapshot
 
 }
@@ -613,6 +633,7 @@ from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 
 const firebaseConfig={
+
 
 apiKey:"AIzaSyAR8EByZhPKm8Miqwwh_1wM2oruBoncCkU",
 
@@ -630,11 +651,9 @@ appId:"1:102677604313:web:d56a37c93bf49f4c8b5bc8"
 
 
 
-
 const app=initializeApp(firebaseConfig);
 
 const db=getFirestore(app);
-
 
 
 
@@ -651,27 +670,22 @@ let bookings=[];
 
 
 
-
-
 enterButton.onclick=()=>{
 
 
 username=nameInput.value.trim();
 
 
-
 if(!username)return;
-
 
 
 admin=username.toLowerCase()=="admin";
 
 
+
 login.style.display="none";
 
 calendarApp.style.display="block";
-
-
 
 
 
@@ -682,16 +696,13 @@ adminControls.innerHTML=`
 
 <div class="adminBox">
 
-
-<input id="menuInput"
-placeholder="Menu title">
+<input id="menuInput" placeholder="Menu title">
 
 
-<textarea id="descInput"
-placeholder="Description"></textarea>
+<textarea id="descInput" placeholder="Description"></textarea>
 
 
-<button id="saveMenu">
+<button id="saveBtn">
 Save Menu
 </button>
 
@@ -707,14 +718,12 @@ Clear All
 
 
 
-saveMenu.onclick=saveMenu;
-
+saveBtn.onclick=saveMenu;
 
 clearBtn.onclick=clearAll;
 
 
 }
-
 
 
 draw();
@@ -727,175 +736,72 @@ draw();
 
 
 
+async function saveMenu(){
+
+
+let title=
+document.getElementById("menuInput").value.trim();
+
+
+let description=
+document.getElementById("descInput").value.trim();
 
 
 
-function draw(){
+if(!title||!description){
+
+alert("Fill everything");
+
+return;
+
+}
 
 
-calendar.innerHTML="";
 
+await setDoc(
 
-monthTitle.innerText=current.toLocaleString(
-"default",
+doc(db,"settings","menu"),
+
 {
-month:"long",
-year:"numeric"
+
+title,
+
+description
+
 }
-);
-
-
-
-let first=new Date(
-
-current.getFullYear(),
-current.getMonth(),
-1
-
-).getDay();
-
-
-
-for(let i=0;i<first;i++)
-calendar.innerHTML+="<div></div>";
-
-
-
-
-let total=new Date(
-
-current.getFullYear(),
-current.getMonth()+1,
-0
-
-).getDate();
-
-
-
-
-for(let d=1;d<=total;d++){
-
-
-let box=document.createElement("div");
-
-box.className="box";
-
-
-box.innerHTML=`
-
-<div>${d}</div>
-
-<div class="people"></div>
-
-`;
-
-
-
-let date=new Date(
-
-current.getFullYear(),
-current.getMonth(),
-d
 
 );
 
 
-
-if(date < new Date().setHours(0,0,0,0))
-
-box.classList.add("disabled");
-
-
-
-let people=box.querySelector(".people");
-
-
-
-bookings.forEach(b=>{
-
-
-let bd=new Date(b.date);
-
-
-
-if(
-
-bd.getDate()==d &&
-
-bd.getMonth()==current.getMonth() &&
-
-bd.getFullYear()==current.getFullYear()
-
-){
-
-
-let p=document.createElement("div");
-
-p.className="person";
-
-
-p.innerHTML=b.name;
-
-
-
-if(admin || b.name==username){
-
-
-let x=document.createElement("button");
-
-x.className="delete";
-
-x.innerText="×";
-
-
-x.onclick=e=>{
-
-e.stopPropagation();
-
-deleteBooking(b);
-
-};
-
-
-p.appendChild(x);
-
-}
-
-
-
-people.appendChild(p);
-
+alert("Saved");
 
 
 }
 
 
 
-});
 
 
 
+async function clearAll(){
 
 
-box.onclick=()=>{
-
-if(!box.classList.contains("disabled"))
-
-addBooking(d);
-
-};
+let snap=await getDocs(
+collection(db,"startingDays")
+);
 
 
 
-calendar.appendChild(box);
+snap.forEach(x=>
 
+deleteDoc(
+doc(db,"startingDays",x.id)
+)
+
+);
 
 
 }
-
-
-}
-
 
 
 
@@ -936,10 +842,11 @@ day
 
 
 
-async function deleteBooking(b){
+async function removeBooking(b){
 
 
-if(!admin && b.name!=username)return;
+if(!admin && b.name!=username)
+return;
 
 
 await deleteDoc(
@@ -957,52 +864,180 @@ doc(db,"startingDays",b.id)
 
 
 
-async function clearAll(){
+function draw(){
 
 
-let snap=await getDocs(
-
-collection(db,"startingDays")
-
-);
-
-
-snap.forEach(d=>
-
-deleteDoc(
-doc(db,"startingDays",d.id)
-)
-
-);
-
-
-}
+calendar.innerHTML="";
 
 
 
+monthTitle.innerText=current.toLocaleString(
 
-
-
-
-async function saveMenu(){
-
-
-await setDoc(
-
-doc(db,"settings","menu"),
+"default",
 
 {
 
-title:menuInput.value,
+month:"long",
 
-description:descInput.value
+year:"numeric"
 
 }
 
 );
 
 
+
+let first=new Date(
+
+current.getFullYear(),
+
+current.getMonth(),
+
+1
+
+).getDay();
+
+
+
+
+for(let i=0;i<first;i++)
+calendar.innerHTML+="<div></div>";
+
+
+
+let total=new Date(
+
+current.getFullYear(),
+
+current.getMonth()+1,
+
+0
+
+).getDate();
+
+
+
+
+
+for(let d=1;d<=total;d++){
+
+
+let box=document.createElement("div");
+
+box.className="box";
+
+
+box.innerHTML=`
+
+<div>${d}</div>
+
+<div class="people"></div>
+
+`;
+
+
+
+let date=new Date(
+
+current.getFullYear(),
+
+current.getMonth(),
+
+d
+
+);
+
+
+
+if(date<new Date().setHours(0,0,0,0))
+
+box.classList.add("disabled");
+
+
+
+let people=box.querySelector(".people");
+
+
+
+bookings.forEach(b=>{
+
+
+let bd=new Date(b.date);
+
+
+
+if(
+
+bd.getDate()==d &&
+
+bd.getMonth()==current.getMonth() &&
+
+bd.getFullYear()==current.getFullYear()
+
+){
+
+
+let p=document.createElement("div");
+
+p.className="person";
+
+
+p.innerHTML=b.name;
+
+
+
+if(admin||b.name==username){
+
+
+let x=document.createElement("button");
+
+x.className="delete";
+
+x.innerText="×";
+
+
+x.onclick=e=>{
+
+e.stopPropagation();
+
+removeBooking(b);
+
+};
+
+
+p.appendChild(x);
+
 }
+
+
+
+people.appendChild(p);
+
+
+}
+
+
+});
+
+
+
+box.onclick=()=>{
+
+if(!box.classList.contains("disabled"))
+
+addBooking(d);
+
+};
+
+
+calendar.appendChild(box);
+
+
+}
+
+
+}
+
 
 
 
@@ -1010,11 +1045,9 @@ description:descInput.value
 
 prevBtn.onclick=()=>{
 
-
 current.setMonth(current.getMonth()-1);
 
 draw();
-
 
 };
 
@@ -1022,11 +1055,9 @@ draw();
 
 nextBtn.onclick=()=>{
 
-
 current.setMonth(current.getMonth()+1);
 
 draw();
-
 
 };
 
@@ -1082,7 +1113,6 @@ if(snap.exists()){
 
 menuTitle.innerText=snap.data().title;
 
-
 menuDescription.innerText=snap.data().description;
 
 
@@ -1096,6 +1126,7 @@ menuDescription.innerText=snap.data().description;
 
 
 </script>
+
 
 </body>
 
