@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Starting Day for DC5</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Segoe UI,Arial,sans-serif;
+}
+
+
+body{
+
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+
+}
+
+
+.card{
+
+background:white;
+width:90%;
+max-width:460px;
+padding:30px;
+border-radius:25px;
+box-shadow:0 20px 50px #0005;
+text-align:center;
+
+}
+
+
+h1{
+
+color:#203a43;
+
+}
+
+
+input{
+
+width:100%;
+padding:15px;
+border-radius:12px;
+border:1px solid #ccc;
+font-size:16px;
+margin:15px 0;
+
+}
+
+
+button{
+
+background:#203a43;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:12px;
+cursor:pointer;
+font-size:16px;
+
+}
+
+
+button:hover{
+
+opacity:.85;
+
+}
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+.header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+
+.calendar{
+
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:7px;
+margin-top:20px;
+
+}
+
+
+.day{
+
+padding:12px;
+border-radius:12px;
+cursor:pointer;
+background:#eef3ff;
+
+}
+
+
+.day:hover{
+
+background:#203a43;
+color:white;
+
+}
+
+
+.weekday{
+
+font-weight:bold;
+color:#777;
+
+}
+
+
+.booking{
+
+margin-top:10px;
+background:#eef3ff;
+padding:12px;
+border-radius:12px;
+
+}
+
+
+#message{
+
+margin-top:15px;
+color:#555;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+<div id="login">
+
+
+<h1>Starting Day for DC5 🚀</h1>
+
+<p>Enter your name</p>
+
+
+<input id="nameInput" placeholder="Your name">
+
+
+<button onclick="start()">
+Continue
+</button>
+
+
+</div>
+
+
+
+<div id="calendarPage" class="hidden">
+
+
+<h1>Starting Day for DC5 🚀</h1>
+
+
+<h3 id="welcome"></h3>
+
+
+<div class="header">
+
+<button onclick="changeMonth(-1)">
+◀
+</button>
+
+
+<h2 id="month"></h2>
+
+
+<button onclick="changeMonth(1)">
+▶
+</button>
+
+
+</div>
+
+
+
+<div class="calendar" id="calendar"></div>
+
+
+<p id="message">
+Choose your date
+</p>
+
+
+
+<h3>Starting Days</h3>
+
+
+<div id="bookings"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script type="module">
+
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+onSnapshot
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+
+
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAR8EByZhPKm8Miqwwh_1wM2oruBoncCkU",
+
+authDomain: "dc5-calendar.firebaseapp.com",
+
+projectId: "dc5-calendar",
+
+storageBucket: "dc5-calendar.firebasestorage.app",
+
+messagingSenderId: "102677604313",
+
+appId: "1:102677604313:web:d56a37c93bf49f4c8b5bc8"
+
+};
+
+
+
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+
+
+let username="";
+
+let current=new Date();
+
+
+
+
+
+window.start=function(){
+
+
+username=document.getElementById("nameInput").value.trim();
+
+
+if(!username){
+
+alert("Enter your name");
+
+return;
+
+}
+
+
+
+document.getElementById("login").classList.add("hidden");
+
+
+document.getElementById("calendarPage").classList.remove("hidden");
+
+
+document.getElementById("welcome").innerText =
+"Welcome "+username+" 👋";
+
+
+drawCalendar();
+
+
+}
+
+
+
+
+
+function drawCalendar(){
+
+
+let cal=document.getElementById("calendar");
+
+
+cal.innerHTML="";
+
+
+
+let days =
+["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+
+
+days.forEach(d=>{
+
+let x=document.createElement("div");
+
+x.className="weekday";
+
+x.innerText=d;
+
+cal.appendChild(x);
+
+});
+
+
+
+let year=current.getFullYear();
+
+let month=current.getMonth();
+
+
+
+document.getElementById("month").innerText =
+
+new Date(year,month)
+
+.toLocaleString("default",
+{
+month:"long",
+year:"numeric"
+});
+
+
+
+let first =
+new Date(year,month,1).getDay();
+
+
+
+for(let i=0;i<first;i++){
+
+cal.appendChild(document.createElement("div"));
+
+}
+
+
+
+let total =
+new Date(year,month+1,0).getDate();
+
+
+
+for(let i=1;i<=total;i++){
+
+
+let b=document.createElement("div");
+
+
+b.className="day";
+
+
+b.innerText=i;
+
+
+
+b.onclick=()=>saveDate(i);
+
+
+
+cal.appendChild(b);
+
+
+}
+
+
+}
+
+
+
+
+window.changeMonth=function(amount){
+
+current.setMonth(
+current.getMonth()+amount
+);
+
+drawCalendar();
+
+}
+
+
+
+
+
+
+async function saveDate(day){
+
+
+let chosen =
+new Date(
+current.getFullYear(),
+current.getMonth(),
+day
+);
+
+
+
+await addDoc(
+
+collection(db,"startingDays"),
+
+{
+
+name:username,
+
+date:chosen.toDateString(),
+
+createdAt:Date.now()
+
+}
+
+);
+
+
+
+document.getElementById("message").innerText =
+"Saved: "+chosen.toDateString();
+
+
+}
+
+
+
+
+
+
+onSnapshot(
+
+collection(db,"startingDays"),
+
+(snapshot)=>{
+
+
+let box=document.getElementById("bookings");
+
+
+box.innerHTML="";
+
+
+
+snapshot.forEach(doc=>{
+
+
+let data=doc.data();
+
+
+
+box.innerHTML +=
+
+`
+
+<div class="booking">
+
+<b>${data.name}</b><br>
+
+${data.date}
+
+</div>
+
+`;
+
+
+
+});
+
+
+}
+
+);
+
+
+
+
+
+</script>
+
+
+</body>
+
+</html>
