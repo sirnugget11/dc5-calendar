@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="icon"
+href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    
 <title>Starting Day for DC5</title>
 
 
@@ -101,7 +104,19 @@ gap:20px;
 
 }
 
+#warning{
+    text-align:center;
+    color:#dc2626;
+    font-weight:bold;
+    min-height:24px;
+    margin-bottom:12px;
+    opacity:0;
+    transition:.25s;
+}
 
+#warning.show{
+    opacity:1;
+}
 
 input,textarea{
 
@@ -466,6 +481,8 @@ Starting Day for DC5 🚀
 Choose your starting day
 </div>
 
+<div id="warning"></div>
+
 
 
 
@@ -798,7 +815,19 @@ doc(db,"startingDays",x.id)
 
 
 
+function showWarning(text){
 
+    warning.innerText = text;
+    warning.classList.add("show");
+
+    clearTimeout(showWarning.timer);
+
+    showWarning.timer = setTimeout(() => {
+        warning.classList.remove("show");
+        warning.innerText = "";
+    },3000);
+
+}
 
 
 async function addBooking(day){
@@ -816,7 +845,7 @@ async function addBooking(day){
     );
 
     if(alreadyBooked){
-        alert("You are already signed up for this day.");
+        showWarning("⚠️ You are already signed up for this day.");
         return;
     }
 
@@ -949,6 +978,9 @@ if(date<new Date().setHours(0,0,0,0))
 
 box.classList.add("disabled");
 
+if(box.classList.contains("disabled")){
+    box.querySelector(".addBtn").style.display="none";
+}
 
 
 let people=box.querySelector(".people");
