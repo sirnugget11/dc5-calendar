@@ -2,528 +2,792 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">    
-    <title>Starting Day for DC5</title>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * {
-            box-sizing: border-box;
-            font-family: Inter, sans-serif;
-        }
+<link rel="icon" href="favicon.ico" type="image/x-icon">    
+<title>Starting Day for DC5</title>
 
-        body {
-            margin: 0;
-            height: 100vh;
-            background: linear-gradient(135deg, #061923, #16758a);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            height: 90vh;
-            background: white;
-            border-radius: 28px;
-            padding: 25px;
-            box-shadow: 0 30px 70px #0008;
-            display: flex;
-            flex-direction: column;
-        }
+<style>
 
-        h1 {
-            text-align: center;
-            color: #092f3d;
-            margin: 0;
-        }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
 
-        .subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 20px;
-        }
 
-        #login {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
+*{
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
 
-        #warning {
-            text-align: center;
-            color: #dc2626;
-            font-weight: bold;
-            min-height: 24px;
-            margin-bottom: 12px;
-            opacity: 0;
-            transition: .25s;
-        }
 
-        #warning.show {
-            opacity: 1;
-        }
+body{
 
-        input, textarea {
-            padding: 14px;
-            border-radius: 14px;
-            border: 2px solid #dbe5ea;
-            font-size: 16px;
-            width: 100%;
-        }
+margin:0;
+height:100vh;
 
-        textarea {
-            height: 90px;
-        }
+background:linear-gradient(135deg,#061923,#16758a);
 
-        button {
-            background: #092f3d;
-            color: white;
-            border: 0;
-            border-radius: 12px;
-            padding: 12px 18px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+display:flex;
+justify-content:center;
+align-items:center;
 
-        button:hover {
-            opacity: .85;
-        }
+padding:15px;
 
-        #calendarApp {
-            display: none;
-            height: 100%;
-        }
+}
 
-        .layout {
-            display: flex;
-            height: 100%;
-            gap: 20px;
-        }
 
-        .sidebar {
-            width: 250px;
-            background: #f1f7fa;
-            border-radius: 20px;
-            padding: 20px;
-        }
 
-        .sidebar h2 {
-            color: #092f3d;
-        }
+.container{
 
-        #menuDescription {
-            color: #475569;
-            line-height: 1.5;
-        }
+width:100%;
+max-width:1200px;
 
-        .adminBox {
-            margin-top: 20px;
-            background: #ffe7eb;
-            padding: 15px;
-            border-radius: 15px;
-        }
+height:90vh;
 
-        .main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+background:white;
 
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+border-radius:28px;
 
-        .month {
-            font-size: 24px;
-            font-weight: 800;
-            color: #092f3d;
-        }
+padding:25px;
 
-        .weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-weight: bold;
-            color: #64748b;
-        }
+box-shadow:0 30px 70px #0008;
 
-        .calendar {
-            flex: 1;
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-template-rows: repeat(6, 1fr);
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            overflow: hidden;
-        }
+display:flex;
 
-        .box {
-            position: relative;
-            padding: 8px;
-            border-right: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            background: #fff;
-        }
+flex-direction:column;
 
-        .box:hover:not(.disabled) {
-            background: #eefaff;
-        }
+}
 
-        .dayHeader {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
 
-        .addBtn {
-            padding: 2px 8px;
-            font-size: 12px;
-            border-radius: 8px;
-            background: #092f3d;
-            color: white;
-            border: 0;
-            cursor: pointer;
-        }
 
-        .addBtn:hover {
-            opacity: .85;
-        }
+h1{
 
-        .disabled {
-            background: #eee;
-        }
+text-align:center;
 
-        .people {
-            position: absolute;
-            top: 25px;
-            bottom: 5px;
-            left: 5px;
-            right: 5px;
-            overflow: auto;
-        }
+color:#092f3d;
 
-        .person {
-            background: #092f3d;
-            color: white;
-            border-radius: 8px;
-            padding: 5px;
-            margin-bottom: 5px;
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
-        }
+margin:0;
 
-        .delete {
-            background: #ef4444;
-            padding: 3px 8px;
-        }
+}
 
-        @media (max-width: 750px) {
-            .layout {
-                flex-direction: column;
-            }
 
-            .sidebar {
-                width: 100%;
-            }
 
-            .calendar {
-                min-height: 400px;
-            }
-        }
-    </style>
+.subtitle{
+
+text-align:center;
+
+color:#64748b;
+
+margin-bottom:20px;
+
+}
+
+
+
+
+#login{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+gap:20px;
+
+}
+
+#warning{
+    text-align:center;
+    color:#dc2626;
+    font-weight:bold;
+    min-height:24px;
+    margin-bottom:12px;
+    opacity:0;
+    transition:.25s;
+}
+
+#warning.show{
+    opacity:1;
+}
+
+input,textarea{
+
+padding:14px;
+
+border-radius:14px;
+
+border:2px solid #dbe5ea;
+
+font-size:16px;
+
+width:100%;
+
+}
+
+
+
+textarea{
+
+height:90px;
+
+}
+
+
+
+button{
+
+background:#092f3d;
+
+color:white;
+
+border:0;
+
+border-radius:12px;
+
+padding:12px 18px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+
+
+button:hover{
+
+opacity:.85;
+
+}
+
+
+
+
+
+#calendarApp{
+
+display:none;
+
+height:100%;
+
+}
+
+
+
+.layout{
+
+display:flex;
+
+height:100%;
+
+gap:20px;
+
+}
+
+
+
+
+.sidebar{
+
+width:250px;
+
+background:#f1f7fa;
+
+border-radius:20px;
+
+padding:20px;
+
+}
+
+
+
+.sidebar h2{
+
+color:#092f3d;
+
+}
+
+
+
+
+#menuDescription{
+
+color:#475569;
+
+line-height:1.5;
+
+}
+
+
+
+
+.adminBox{
+
+margin-top:20px;
+
+background:#ffe7eb;
+
+padding:15px;
+
+border-radius:15px;
+
+}
+
+
+
+
+.main{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+
+
+
+
+.toolbar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+
+
+
+.month{
+
+font-size:24px;
+
+font-weight:800;
+
+color:#092f3d;
+
+}
+
+
+
+
+
+.weekdays{
+
+display:grid;
+
+grid-template-columns:repeat(7,1fr);
+
+text-align:center;
+
+font-weight:bold;
+
+color:#64748b;
+
+}
+
+
+
+.calendar{
+
+flex:1;
+
+display:grid;
+
+grid-template-columns:repeat(7,1fr);
+
+grid-template-rows:repeat(6,1fr);
+
+border:1px solid #ddd;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+
+
+
+.box{
+
+position:relative;
+
+padding:8px;
+
+border-right:1px solid #ddd;
+
+border-bottom:1px solid #ddd;
+
+background:#fff;
+
+}
+
+
+
+.box:hover:not(.disabled){
+    background:#eefaff;
+}
+
+.dayHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.addBtn{
+    padding:2px 8px;
+    font-size:12px;
+    border-radius:8px;
+    background:#092f3d;
+    color:white;
+    border:0;
+    cursor:pointer;
+}
+
+.addBtn:hover{
+    opacity:.85;
+}
+
+
+
+.disabled{
+
+background:#eee;
+
+/* Removed pointer-events:none to allow proper interaction */
+}
+
+
+
+.people{
+
+position:absolute;
+
+top:25px;
+
+bottom:5px;
+
+left:5px;
+
+right:5px;
+
+overflow:auto;
+
+}
+
+
+
+
+.person{
+
+background:#092f3d;
+
+color:white;
+
+border-radius:8px;
+
+padding:5px;
+
+margin-bottom:5px;
+
+font-size:12px;
+
+display:flex;
+
+justify-content:space-between;
+
+}
+
+
+
+
+.delete{
+
+background:#ef4444;
+
+padding:3px 8px;
+
+}
+
+
+
+
+
+@media(max-width:750px){
+
+
+.layout{
+
+flex-direction:column;
+
+}
+
+
+
+.sidebar{
+
+width:100%;
+
+}
+
+
+
+.calendar{
+
+min-height:400px;
+
+}
+
+
+}
+
+
+
+</style>
+
+
 </head>
 
+
+
+
 <body>
-    <div class="container">
-        <h1>Starting Day for DC5 🚀</h1>
-        <div class="subtitle">Choose your starting day</div>
-        <div id="warning"></div>
-        
-        <div id="login">
-            <input id="nameInput" placeholder="Your name">
-            <button id="enterButton">Enter Calendar</button>
-        </div>
 
-        <div id="calendarApp">
-            <div class="layout">
-                <div class="sidebar">
-                    <h2 id="menuTitle">Welcome to DC5</h2>
-                    <p id="menuDescription">Select your starting day below.</p>
-                    <div class="adminBox" id="adminBox" style="display: none;">
-                        <h3>Admin Controls</h3>
-                        <p>You are currently logged in as an administrator.</p>
-                    </div>
-                </div>
-                
-                <div class="main">
-                    <div class="toolbar">
-                        <button id="prevBtn">Previous Month</button>
-                        <div class="month" id="currentMonth"></div>
-                        <button id="nextBtn">Next Month</button>
-                    </div>
-                    
-                    <div class="calendar" id="calendarGrid"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        // DOM Elements
-        const nameInput = document.getElementById('nameInput');
-        const enterButton = document.getElementById('enterButton');
-        const loginSection = document.getElementById('login');
-        const calendarApp = document.getElementById('calendarApp');
-        const calendarGrid = document.getElementById('calendarGrid');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const currentMonth = document.getElementById('currentMonth');
-        const menuTitle = document.getElementById('menuTitle');
-        const menuDescription = document.getElementById('menuDescription');
-        const adminBox = document.getElementById('adminBox');
-        const warning = document.getElementById('warning');
+<div class="container">
 
-        // State variables
-        let currentMonthIndex = new Date().getMonth();
-        let currentYear = new Date().getFullYear();
-        let bookings = [];
-        let currentUser = null;
-        let isAdmin = false;
 
-        // Initialize the app
-        function initApp() {
-            updateMonthDisplay();
-            setupEventListeners();
-            
-            // Simulate Firebase data for demo purposes
-            simulateFirebaseData();
-        }
+<h1>
+Starting Day for DC5 🚀
+</h1>
 
-        // Update month display
-        function updateMonthDisplay() {
-            const months = ["January", "February", "March", "April", "May", "June",
-                            "July", "August", "September", "October", "November", "December"];
-            currentMonth.textContent = `${months[currentMonthIndex]} ${currentYear}`;
-        }
 
-        // Setup event listeners
-        function setupEventListeners() {
-            enterButton.addEventListener('click', handleLogin);
-            prevBtn.addEventListener('click', () => changeMonth(-1));
-            nextBtn.addEventListener('click', () => changeMonth(1));
-        }
+<div class="subtitle">
+Choose your starting day
+</div>
 
-        // Handle user login
-        function handleLogin() {
-            const name = nameInput.value.trim();
-            if (!name) {
-                showWarning("Please enter your name");
-                return;
-            }
-            
-            currentUser = name;
-            loginSection.style.display = 'none';
-            calendarApp.style.display = 'flex';
-            
-            // Simulate admin check
-            if (name === "admin") {
-                isAdmin = true;
-                adminBox.style.display = 'block';
-            }
-            
-            renderCalendar();
-        }
+<div id="warning"></div>
 
-        // Change month
-        function changeMonth(direction) {
-            currentMonthIndex += direction;
-            
-            if (currentMonthIndex < 0) {
-                currentMonthIndex = 11;
-                currentYear--;
-            } else if (currentMonthIndex > 11) {
-                currentMonthIndex = 0;
-                currentYear++;
-            }
-            
-            updateMonthDisplay();
-            renderCalendar();
-        }
 
-        // Render calendar
-        function renderCalendar() {
-            calendarGrid.innerHTML = '';
-            
-            // Create weekdays header
-            const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            weekdays.forEach(day => {
-                const dayHeader = document.createElement('div');
-                dayHeader.textContent = day;
-                dayHeader.style.fontWeight = 'bold';
-                dayHeader.style.textAlign = 'center';
-                calendarGrid.appendChild(dayHeader);
-            });
-            
-            // Get first day of month and total days
-            const firstDay = new Date(currentYear, currentMonthIndex, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonthIndex + 1, 0).getDate();
-            
-            // Add empty cells for days before the first day
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement('div');
-                calendarGrid.appendChild(emptyCell);
-            }
-            
-            // Add cells for each day of the month
-            const today = new Date();
-            for (let day = 1; day <= daysInMonth; day++) {
-                const box = document.createElement('div');
-                box.className = 'box';
-                
-                // Check if this is a past date
-                const date = new Date(currentYear, currentMonthIndex, day);
-                if (date < new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
-                    box.classList.add('disabled');
-                }
-                
-                box.innerHTML = `
-                    <div class="dayHeader">
-                        <span>${day}</span>
-                        ${box.classList.contains('disabled') ? '' : '<button class="addBtn">+</button>'}
-                    </div>
-                    <div class="people"></div>
-                `;
-                
-                const peopleContainer = box.querySelector('.people');
-                const addBtn = box.querySelector('.addBtn');
-                
-                // Add click event for adding booking
-                if (addBtn) {
-                    addBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        addBooking(day);
-                    });
-                }
-                
-                // Add bookings to this day
-                bookings.forEach(booking => {
-                    const bookingDate = new Date(booking.date);
-                    if (bookingDate.getDate() === day && 
-                        bookingDate.getMonth() === currentMonthIndex && 
-                        bookingDate.getFullYear() === currentYear) {
-                        
-                        const personDiv = document.createElement('div');
-                        personDiv.className = 'person';
-                        personDiv.textContent = booking.name;
-                        
-                        // Add delete button for admin or owner
-                        if (isAdmin || booking.name === currentUser) {
-                            const deleteBtn = document.createElement('button');
-                            deleteBtn.className = 'delete';
-                            deleteBtn.innerHTML = '×';
-                            deleteBtn.addEventListener('click', (e) => {
-                                e.stopPropagation();
-                                removeBooking(booking.id);
-                            });
-                            personDiv.appendChild(deleteBtn);
-                        }
-                        
-                        peopleContainer.appendChild(personDiv);
-                    }
-                });
-                
-                calendarGrid.appendChild(box);
-            }
-        }
 
-        // Add booking
-        function addBooking(day) {
-            if (!currentUser) {
-                showWarning("Please log in first");
-                return;
-            }
-            
-            const date = new Date(currentYear, currentMonthIndex, day);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            
-            if (date < today) {
-                showWarning("Cannot book past dates");
-                return;
-            }
-            
-            // Check if already booked
-            const isAlreadyBooked = bookings.some(b => {
-                const bDate = new Date(b.date);
-                return bDate.getDate() === day && 
-                       bDate.getMonth() === currentMonthIndex && 
-                       bDate.getFullYear() === currentYear && 
-                       b.name === currentUser;
-            });
-            
-            if (isAlreadyBooked) {
-                showWarning("You've already booked this day");
-                return;
-            }
-            
-            // Add to bookings
-            const newBooking = {
-                id: Date.now().toString(),
-                name: currentUser,
-                date: date.toISOString()
-            };
-            
-            bookings.push(newBooking);
-            renderCalendar();
-            showWarning(`Successfully booked ${day} ${currentMonth.textContent}`);
-        }
 
-        // Remove booking
-        function removeBooking(bookingId) {
-            bookings = bookings.filter(b => b.id !== bookingId);
-            renderCalendar();
-            showWarning("Booking removed");
-        }
 
-        // Show warning message
-        function showWarning(message) {
-            warning.textContent = message;
-            warning.classList.add('show');
-            
-            setTimeout(() => {
-                warning.classList.remove('show');
-            }, 3000);
-        }
+<div id="login">
 
-        // Simulate Firebase data for demo purposes
-        function simulateFirebaseData() {
-            // Simulate some initial bookings
-            bookings = [
-                { id: '1', name: 'Alice', date: new Date(currentYear, currentMonthIndex, 5).toISOString() },
-                { id: '2', name: 'Bob', date: new Date(currentYear, currentMonthIndex, 10).toISOString() },
-                { id: '3', name: 'Charlie', date: new Date(currentYear, currentMonthIndex, 15).toISOString() }
-            ];
-            
-            // Simulate menu data
-            menuTitle.textContent = "Welcome to DC5 Starting Day Calendar";
-            menuDescription.textContent = "Book your starting day below. Admins can manage bookings and view all details.";
-        }
 
-        // Initialize the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initApp);
-    </script>
+<input id="nameInput" placeholder="Your name">
+
+
+<button id="enterButton">
+Enter Calendar
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="calendarApp">
+
+
+
+<div class="layout">
+
+
+
+<div class="sidebar">
+
+
+<h2 id="menuTitle">
+Information
+</h2>
+
+
+<p id="menuDescription">
+No information yet.
+</p>
+
+
+
+
+<div id="adminControls"></div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="main">
+
+
+
+<div class="toolbar">
+
+
+<button id="prevBtn">
+←
+</button>
+
+
+
+<div class="month" id="monthTitle"></div>
+
+
+
+<button id="nextBtn">
+→
+</button>
+
+
+
+</div>
+
+
+
+
+
+<div class="weekdays">
+
+<div>Sun</div>
+<div>Mon</div>
+<div>Tue</div>
+<div>Wed</div>
+<div>Thu</div>
+<div>Fri</div>
+<div>Sat</div>
+
+</div>
+
+
+
+
+<div id="calendar" class="calendar"></div>
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script type="module">
+
+
+import {initializeApp}
+
+from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+
+
+import {
+
+getFirestore,
+collection,
+doc,
+setDoc,
+addDoc,
+deleteDoc,
+getDocs,
+onSnapshot
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+
+
+
+
+const firebaseConfig={
+
+
+apiKey:"AIzaSyAR8EByZhPKm8Miqwwh_1wM2oruBoncCkU",
+
+authDomain:"dc5-calendar.firebaseapp.com",
+
+projectId:"dc5-calendar",
+
+storageBucket:"dc5-calendar.firebasestorage.app",
+
+messagingSenderId:"102677604313",
+
+appId:"1:102677604313:web:1234567890abcdef123456"
+
+};
+
+
+
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+
+
+#login{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+}
+
+#enterButton {
+    width: 200px;
+    padding: 12px;
+    font-size: 18px;
+}
+
+#nameInput {
+    width: 200px;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.box {
+    background-color: white;
+    min-height: 80px;
+    padding: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.dayHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.addBtn {
+    padding: 2px 8px;
+    font-size: 12px;
+    background-color: #092f3d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.addBtn:hover {
+    opacity: 0.8;
+}
+
+.people {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 60px;
+    padding-top: 5px;
+}
+
+.person {
+    background-color: #092f3d;
+    color: white;
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.delete {
+    background-color: #ef4444;
+    border: none;
+    color: white;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.disabled {
+    background-color: #eee;
+}
+
+.disabled .addBtn {
+    display: none;
+}
+
+/* Add some responsive adjustments */
+@media (max-width: 768px) {
+    .calendar {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.5px;
+    }
+    
+    .box {
+        min-height: 60px;
+        padding: 4px;
+    }
+    
+    .person {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+}
+
+</script>
+
+
 </body>
 
 </html>
