@@ -324,35 +324,27 @@ background:#fff;
 
 
 .box:hover:not(.disabled){
-
-background:#eefaff;
-
-cursor:pointer;
-
+    background:#eefaff;
 }
 
+.dayHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 
+.addBtn{
+    padding:2px 8px;
+    font-size:12px;
+    border-radius:8px;
+    background:#092f3d;
+    color:white;
+    border:0;
+    cursor:pointer;
+}
 
-.box:hover:not(.disabled)::after{
-
-content:"+ Add";
-
-position:absolute;
-
-right:6px;
-
-bottom:6px;
-
-font-size:11px;
-
-background:#092f3d;
-
-color:white;
-
-padding:5px;
-
-border-radius:20px;
-
+.addBtn:hover{
+    opacity:.85;
 }
 
 
@@ -811,29 +803,30 @@ doc(db,"startingDays",x.id)
 
 async function addBooking(day){
 
+    const selectedDate = new Date(
+        current.getFullYear(),
+        current.getMonth(),
+        day
+    ).toISOString();
 
-await addDoc(
+    // Check if this user already exists on this day
+    const alreadyBooked = bookings.some(b =>
+        b.name.toLowerCase() === username.toLowerCase() &&
+        new Date(b.date).toDateString() === new Date(selectedDate).toDateString()
+    );
 
-collection(db,"startingDays"),
+    if(alreadyBooked){
+        alert("You are already signed up for this day.");
+        return;
+    }
 
-{
-
-name:username,
-
-date:new Date(
-
-current.getFullYear(),
-
-current.getMonth(),
-
-day
-
-).toISOString()
-
-}
-
-);
-
+    await addDoc(
+        collection(db,"startingDays"),
+        {
+            name:username,
+            date:selectedDate
+        }
+    );
 
 }
 
@@ -929,7 +922,10 @@ box.className="box";
 
 box.innerHTML=`
 
-<div>${d}</div>
+<div class="dayHeader">
+    <span>${d}</span>
+    <button class="addBtn">+</button>
+</div>
 
 <div class="people"></div>
 
@@ -957,7 +953,17 @@ box.classList.add("disabled");
 
 let people=box.querySelector(".people");
 
+const addBtn = box.querySelector(".addBtn");
 
+addBtn.onclick = (e) => {
+
+    e.stopPropagation();
+
+    if(box.classList.contains("disabled")) return;
+
+    addBooking(d);
+
+};
 
 bookings.forEach(b=>{
 
@@ -1020,14 +1026,6 @@ people.appendChild(p);
 });
 
 
-
-box.onclick=()=>{
-
-if(!box.classList.contains("disabled"))
-
-addBooking(d);
-
-};
 
 
 calendar.appendChild(box);
