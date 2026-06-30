@@ -103,17 +103,23 @@ gap:20px;
 }
 
 #warning{
+    background:#fee2e2;
+    color:#b91c1c;
+    border:1px solid #fecaca;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:15px;
     text-align:center;
-    color:#dc2626;
-    font-weight:bold;
-    min-height:24px;
-    margin-bottom:12px;
+    font-weight:600;
     opacity:0;
+    transform:translateY(-8px);
     transition:.25s;
+    pointer-events:none;
 }
 
 #warning.show{
     opacity:1;
+    transform:translateY(0);
 }
 
 input,textarea{
@@ -363,11 +369,7 @@ background:#fff;
 
 
 .disabled{
-
-background:#eee;
-
-pointer-events:none;
-
+    background:#eee;
 }
 
 
@@ -479,12 +481,6 @@ Starting Day for DC5 🚀
 Choose your starting day
 </div>
 
-<div id="warning"></div>
-
-
-
-
-
 <div id="login">
 
 
@@ -542,7 +538,7 @@ No information yet.
 
 <div class="main">
 
-
+<div id="warning"></div>
 
 <div class="toolbar">
 
